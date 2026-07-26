@@ -1,8 +1,17 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { ExternalLink, Search } from "lucide-react";
+import { ExternalLink, Flag, Search } from "lucide-react";
 import { planningPortals, regions } from "@/data/planning-portals";
+
+const REPORT_BASE =
+  "https://github.com/stumpyuk1/build-on/issues/new?template=broken-portal-link.yml";
+
+function reportUrl(name: string, url: string) {
+  const title = encodeURIComponent(`Broken portal link: ${name}`);
+  // Issue forms don't pre-fill body fields via query string; title helps triage.
+  return `${REPORT_BASE}&title=${title}`;
+}
 
 export default function PortalsDirectory() {
   const [query, setQuery] = useState("");
@@ -51,19 +60,33 @@ export default function PortalsDirectory() {
         </select>
       </div>
 
-      <p className="text-sm text-navy-600 mb-4">
-        Showing <strong className="text-navy-950">{filtered.length}</strong> of{" "}
-        {planningPortals.length} authorities in this starter list.
-      </p>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-4">
+        <p className="text-sm text-navy-600">
+          Showing <strong className="text-navy-950">{filtered.length}</strong> of{" "}
+          {planningPortals.length} authorities in this starter list.
+        </p>
+        <a
+          href={REPORT_BASE}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-navy-600 hover:text-build-green-dark"
+        >
+          <Flag size={14} />
+          Report a broken link
+        </a>
+      </div>
 
       <ul className="divide-y divide-navy-100 border border-navy-100 rounded-xl overflow-hidden">
         {filtered.map((p) => (
-          <li key={`${p.name}-${p.url}`}>
+          <li
+            key={`${p.name}-${p.url}`}
+            className="flex items-stretch gap-1 px-2 sm:px-3 hover:bg-navy-50 transition-colors"
+          >
             <a
               href={p.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-between gap-4 px-4 sm:px-5 py-3.5 hover:bg-navy-50 transition-colors group"
+              className="flex flex-1 items-center justify-between gap-4 py-3.5 px-2 sm:px-2 min-w-0 group"
             >
               <div className="min-w-0">
                 <p className="font-medium text-navy-950 group-hover:text-build-green-dark truncate">
@@ -75,6 +98,16 @@ export default function PortalsDirectory() {
                 size={16}
                 className="text-navy-400 group-hover:text-build-green-dark shrink-0"
               />
+            </a>
+            <a
+              href={reportUrl(p.name, p.url)}
+              target="_blank"
+              rel="noopener noreferrer"
+              title={`Report broken link for ${p.name}`}
+              className="flex items-center px-2 text-navy-400 hover:text-amber-700 shrink-0"
+              aria-label={`Report broken link for ${p.name}`}
+            >
+              <Flag size={15} />
             </a>
           </li>
         ))}

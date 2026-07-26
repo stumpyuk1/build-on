@@ -1,0 +1,60 @@
+name: Broken planning portal link
+description: Report a dead, wrong, or outdated council planning portal URL in the directory.
+title: "Broken portal link: "
+labels: ["portals", "data"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping keep the planning portals directory accurate.
+        Please fill in what you can — a suggested replacement URL is especially useful.
+
+  - type: input
+    id: council-name
+    attributes:
+      label: Council / LPA name
+      description: As shown on the Build On portals page, if possible.
+      placeholder: e.g. Sunderland City Council
+    validations:
+      required: true
+
+  - type: input
+    id: current-url
+    attributes:
+      label: Current URL on the site
+      description: The link that is broken or wrong.
+      placeholder: https://...
+    validations:
+      required: true
+
+  - type: input
+    id: suggested-url
+    attributes:
+      label: Suggested correct URL (if known)
+      description: Direct link to the council’s planning applications search or planning hub.
+      placeholder: https://...
+    validations:
+      required: false
+
+  - type: dropdown
+    id: problem-type
+    attributes:
+      label: What’s wrong?
+      options:
+        - Page not found (404)
+        - Timeout / site unreachable
+        - Redirects to unrelated page
+        - Wrong council or outdated after reorganisation
+        - Works but not the planning applications search
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Extra notes
+      description: Anything else that would help (e.g. new council name after merger).
+      placeholder: Optional
+    validations:
+      required: false

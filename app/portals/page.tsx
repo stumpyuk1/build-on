@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, ExternalLink } from "lucide-react";
+import { ArrowRight, ExternalLink, Flag } from "lucide-react";
 import PortalsDirectory from "@/components/PortalsDirectory";
 
 export const metadata: Metadata = {
@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   description:
     "Find your local planning authority’s online planning applications search — a practical step while national open data catches up.",
 };
+
+const REPORT_ISSUE_URL =
+  "https://github.com/stumpyuk1/build-on/issues/new?template=broken-portal-link.yml";
 
 export default function PortalsPage() {
   return (
@@ -38,24 +41,47 @@ export default function PortalsPage() {
 
         <PortalsDirectory />
 
-        <div className="mt-12 rounded-2xl border border-navy-100 p-6 sm:p-8">
-          <h2 className="text-lg font-semibold text-navy-950 mb-3">
-            Can’t find your council?
-          </h2>
-          <p className="text-navy-700 text-sm leading-relaxed mb-4">
-            Use the official Planning Portal tool to look up your local planning
-            authority, then search for “planning applications” or “public access”
-            on that council’s website.
-          </p>
-          <a
-            href="https://www.planningportal.co.uk/find-your-local-planning-authority"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-build-green-dark hover:text-build-green"
-          >
-            Find your local planning authority
-            <ExternalLink size={14} />
-          </a>
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="rounded-2xl border border-navy-100 p-6 sm:p-8">
+            <h2 className="text-lg font-semibold text-navy-950 mb-3">
+              Can’t find your council?
+            </h2>
+            <p className="text-navy-700 text-sm leading-relaxed mb-4">
+              Use the official Planning Portal tool to look up your local planning
+              authority, then search for “planning applications” or “public access”
+              on that council’s website.
+            </p>
+            <a
+              href="https://www.planningportal.co.uk/find-your-local-planning-authority"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-build-green-dark hover:text-build-green"
+            >
+              Find your local planning authority
+              <ExternalLink size={14} />
+            </a>
+          </div>
+
+          <div className="rounded-2xl border border-navy-100 p-6 sm:p-8">
+            <h2 className="text-lg font-semibold text-navy-950 mb-3 flex items-center gap-2">
+              <Flag size={18} className="text-build-green-dark" />
+              Spot a broken link?
+            </h2>
+            <p className="text-navy-700 text-sm leading-relaxed mb-4">
+              Councils reorganise sites often. Open a short GitHub issue with the
+              council name, the dead URL, and a better one if you have it — that
+              keeps the directory honest without waiting for a full crawl.
+            </p>
+            <a
+              href={REPORT_ISSUE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-build-green-dark hover:text-build-green"
+            >
+              Report a broken portal link
+              <ExternalLink size={14} />
+            </a>
+          </div>
         </div>
 
         <div className="mt-10 flex flex-col sm:flex-row gap-4">
