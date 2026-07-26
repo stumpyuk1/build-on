@@ -2,21 +2,174 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
+/**
+ * Heuristics to identify applications that look like new housing / significant residential development
+ * rather than typical householder works (extensions, porches, loft conversions, etc.).
+ */
+const INCLUDE_KEYWORDS = [
+  // New dwellings / schemes
+  "new dwelling",
+  "new dwellings",
+  "detached dwelling",
+  "detached house",
+  "semi-detached",
+  "terraced house",
+  "new house",
+  "new homes",
+  "new home",
+  "residential development",
+  "residential scheme",
+  "housing development",
+  "housing scheme",
+  "apartment",
+  "apartments",
+  "flat",
+  "flats",
+  "units",
+  "dwellings",
+  "homes",
+  "maisonette",
+  "student accommodation",
+  "care home",
+  "extra care",
+  "affordable housing",
+  "social housing",
+  "build to rent",
+  "build-to-rent",
+  // Process indicators of larger schemes
+  "outline application",
+  "outline planning",
+  "reserved matters",
+  "hybrid application",
+  "demolition of existing",
+  "erection of",
+  "construction of",
+  "redevelopment",
+  "mixed use",
+  "mixed-use",
+];
+
+const EXCLUDE_KEYWORDS = [
+  // Classic householder
+  "single storey extension",
+  "single-storey extension",
+  "two storey extension",
+  "two-storey extension",
+  "rear extension",
+  "side extension",
+  "front extension",
+  "loft conversion",
+  "roof extension",
+  "dormer",
+  "porch",
+  "conservatory",
+  "garage conversion",
+  "outbuilding",
+  "summer house",
+  "summerhouse",
+  "garden room",
+  "shed",
+  "fence",
+  "boundary wall",
+  "driveway",
+  "dropped kerb",
+  "hardstanding",
+  "solar panel",
+  "pv installation",
+  "air source heat pump",
+  "ashp",
+  "window",
+  "door",
+  "fascia",
+  "signage",
+  "advertisement",
+  "advert",
+  "tree",
+  "tpo",
+  "works to tree",
+  "crown",
+  "pruning",
+  "listed building consent",
+  "certificate of lawfulness",
+  "lawful development",
+  "variation of condition",
+  "discharge of condition",
+  "non-material amendment",
+  "nma",
+];
+
+// Reference codes that often indicate larger / full applications
+const MAJOR_REF_PATTERNS = [
+  /FULM\b/i, // Full major
+  /OUT\b/i, // Outline
+  /OUTM\b/i, // Outline major
+  /RES\b/i, // Reserved matters
+  /HYB\b/i, // Hybrid
+  /\bMAJ\b/i,
+];
+
+function isLikelyNewHousing(app: {
+  title: string;
+  reference: string;
+  description: string;
+}): boolean {
+  const text = `${app.title} ${app.description} ${app.reference}`.toLowerCase();
+
+  // Strong exclude first – if it looks like classic householder, drop it
+  for (const kw of EXCLUDE_KEYWORDS) {
+    if (text.includes(kw.toLowerCase())) {
+      // Exception: if the same text also clearly talks about multiple new dwellings, keep it
+      const hasStrongInclude =
+        text.includes("dwellings") ||
+        text.includes("new homes") ||
+        text.includes("residential development") ||
+        text.includes("apartments") ||
+        /\d+\s*(dwellings?|homes?|units?|flats?|apartments?)/i.test(text);
+
+      if (!hasStrongInclude) return false;
+    }
+  }
+
+  // Positive signals
+  for (const kw of INCLUDE_KEYWORDS) {
+    if (text.includes(kw.toLowerCase())) return true;
+  }
+
+  // Reference code heuristics
+  for (const pattern of MAJOR_REF_PATTERNS) {
+    if (pattern.test(app.reference)) return true;
+  }
+
+  // Numbered dwellings / units (e.g. "12 dwellings", "48 units")
+  if (/\d+\s*(dwellings?|homes?|units?|flats?|apartments?|houses?)/i.test(text)) {
+    return true;
+  }
+
+  // "Erection of a detached dwelling" style phrases already partly covered,
+  // but catch simple "new dwelling" patterns
+  if (/\b(new|detached|semi[- ]detached)\s+(dwelling|house|bungalow)\b/i.test(text)) {
+    return true;
+  }
+
+  return false;
+}
+
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
 
-  // Default: recent applications with a reasonable limit
-  const limit = searchParams.get("limit") || "50";
+  // Fetch a larger batch upstream so we still have enough after filtering
+  const requestedLimit = parseInt(searchParams.get("limit") || "50", 10);
+  const fetchLimit = Math.min(Math.max(requestedLimit * 4, 100), 200); // oversample
   const offset = searchParams.get("offset") || "0";
-  const geometry = searchParams.get("geometry"); // optional WKT polygon
+  const geometry = searchParams.get("geometry");
   const lat = searchParams.get("lat");
   const lng = searchParams.get("lng");
+  const strict = searchParams.get("strict") !== "false"; // default true
 
   const params = new URLSearchParams();
   params.set("dataset", "planning-application");
-  params.set("limit", limit);
+  params.set("limit", String(fetchLimit));
   params.set("offset", offset);
-  // Request useful fields
   params.append("field", "name");
   params.append("field", "reference");
   params.append("field", "point");
@@ -33,9 +186,8 @@ export async function GET(request: NextRequest) {
     params.set("longitude", lng);
   }
 
-  // Prefer more recent applications when no spatial filter
   if (!geometry && !lat) {
-    params.set("start_date_year", "2024");
+    params.set("start_date_year", "2023");
     params.set("start_date_match", "since");
   }
 
@@ -47,7 +199,7 @@ export async function GET(request: NextRequest) {
         Accept: "application/json",
         "User-Agent": "BuildOn/0.1 (https://github.com/stumpyuk1/build-on)",
       },
-      next: { revalidate: 3600 }, // cache for 1 hour
+      next: { revalidate: 3600 },
     });
 
     if (!res.ok) {
@@ -60,22 +212,22 @@ export async function GET(request: NextRequest) {
 
     const data = await res.json();
 
-    // Normalise entities that have usable coordinates
-    const applications = (data.entities || [])
+    const normalised = (data.entities || [])
       .map((e: any) => {
-        let lat: number | null = null;
-        let lng: number | null = null;
+        let latNum: number | null = null;
+        let lngNum: number | null = null;
 
-        // point is usually "POINT (lng lat)" in WKT
         if (e.point && typeof e.point === "string") {
-          const match = e.point.match(/POINT\s*\(\s*([\d.\-]+)\s+([\d.\-]+)\s*\)/i);
+          const match = e.point.match(
+            /POINT\s*\(\s*([\d.\-]+)\s+([\d.\-]+)\s*\)/i
+          );
           if (match) {
-            lng = parseFloat(match[1]);
-            lat = parseFloat(match[2]);
+            lngNum = parseFloat(match[1]);
+            latNum = parseFloat(match[2]);
           }
         }
 
-        if (lat === null || lng === null || isNaN(lat) || isNaN(lng)) {
+        if (latNum === null || lngNum === null || isNaN(latNum) || isNaN(lngNum)) {
           return null;
         }
 
@@ -83,22 +235,41 @@ export async function GET(request: NextRequest) {
           id: String(e.entity ?? e.reference ?? Math.random()),
           title: e.name || e.reference || "Planning application",
           reference: e.reference || "",
-          lat,
-          lng,
+          lat: latNum,
+          lng: lngNum,
           startDate: e["start-date"] || e["entry-date"] || "",
           description: e.description || "",
           organisation: e["organisation-entity"] || "",
         };
       })
-      .filter(Boolean);
+      .filter(Boolean) as Array<{
+      id: string;
+      title: string;
+      reference: string;
+      lat: number;
+      lng: number;
+      startDate: string;
+      description: string;
+      organisation: string;
+    }>;
+
+    // Apply housing-focused filter
+    const filtered = strict
+      ? normalised.filter(isLikelyNewHousing)
+      : normalised;
+
+    // Cap to the originally requested limit
+    const applications = filtered.slice(0, requestedLimit);
 
     return NextResponse.json({
-      count: data.count ?? applications.length,
+      count: applications.length,
+      totalUpstream: data.count ?? normalised.length,
       applications,
       source: "planning.data.gov.uk",
+      filter: strict ? "new-housing-heuristic" : "none",
       note:
         applications.length === 0
-          ? "The official planning-application dataset is still incomplete. Many records lack coordinates."
+          ? "No applications matching the new-housing filter were found in this batch. The official dataset is still incomplete and biased toward householder applications."
           : undefined,
     });
   } catch (err) {
