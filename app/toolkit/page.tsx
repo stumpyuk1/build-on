@@ -8,6 +8,7 @@ import {
   CheckCircle2,
   BookOpen,
   Map,
+  Sparkles,
 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -33,6 +34,31 @@ export default function ToolkitPage() {
       </div>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+        {/* Featured: letter generator */}
+        <Link
+          href="/toolkit/generator"
+          className="mb-12 block rounded-2xl border-2 border-build-green/30 bg-build-green/5 p-6 sm:p-8 hover:border-build-green/60 transition-colors"
+        >
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-build-green/20 text-build-green-dark shrink-0">
+              <Sparkles size={24} />
+            </div>
+            <div className="flex-1">
+              <h2 className="text-xl font-semibold text-navy-950 mb-1">
+                Letter generator
+              </h2>
+              <p className="text-navy-600 leading-relaxed">
+                Enter the application reference and site, tick your reasons, and
+                copy a ready-made representation grounded in housing need.
+              </p>
+            </div>
+            <span className="inline-flex items-center gap-2 text-build-green-dark font-semibold shrink-0">
+              Open generator
+              <ArrowRight size={16} />
+            </span>
+          </div>
+        </Link>
+
         {/* Three main tools */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
           {[
@@ -41,7 +67,7 @@ export default function ToolkitPage() {
               title: "Write a representation",
               body: "A step-by-step structure and sample wording so you cover material considerations and local housing need without the jargon.",
               href: "/toolkit/write",
-              cta: "Start writing",
+              cta: "Writing guide",
             },
             {
               icon: MessageSquare,

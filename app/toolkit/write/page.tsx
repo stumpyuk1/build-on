@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, Copy } from "lucide-react";
+import { ArrowLeft, ArrowRight, Sparkles } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Write a representation",
@@ -31,7 +31,29 @@ export default function WritePage() {
       </div>
 
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-        {/* Before you start */}
+        {/* Generator CTA */}
+        <Link
+          href="/toolkit/generator"
+          className="mb-12 flex flex-col sm:flex-row sm:items-center gap-4 rounded-2xl border-2 border-build-green/30 bg-build-green/5 p-6 hover:border-build-green/60 transition-colors"
+        >
+          <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-build-green/20 text-build-green-dark shrink-0">
+            <Sparkles size={22} />
+          </div>
+          <div className="flex-1">
+            <h2 className="font-semibold text-navy-950 mb-1">
+              Prefer a guided form?
+            </h2>
+            <p className="text-sm text-navy-600">
+              Use the letter generator to fill in the details and copy a complete
+              representation in one go.
+            </p>
+          </div>
+          <span className="inline-flex items-center gap-2 text-sm font-semibold text-build-green-dark shrink-0">
+            Open generator
+            <ArrowRight size={14} />
+          </span>
+        </Link>
+
         <div className="rounded-2xl border border-navy-100 p-6 sm:p-8 mb-12">
           <h2 className="text-xl font-semibold text-navy-950 mb-4">
             Before you start
@@ -61,7 +83,6 @@ export default function WritePage() {
           </ol>
         </div>
 
-        {/* Structure */}
         <h2 className="text-2xl font-bold text-navy-950 mb-6">
           Suggested structure
         </h2>
@@ -162,7 +183,6 @@ export default function WritePage() {
           </div>
         </div>
 
-        {/* Full sample */}
         <div className="rounded-2xl border border-navy-100 p-6 sm:p-8 mb-12">
           <h2 className="text-xl font-semibold text-navy-950 mb-4">
             Full sample (short version)
@@ -197,7 +217,6 @@ export default function WritePage() {
           </p>
         </div>
 
-        {/* Tips */}
         <div className="rounded-2xl bg-navy-50 border border-navy-100 p-6 sm:p-8 mb-12">
           <h2 className="text-xl font-semibold text-navy-950 mb-4">
             Practical tips
@@ -213,17 +232,17 @@ export default function WritePage() {
 
         <div className="flex flex-col sm:flex-row gap-4">
           <Link
-            href="/toolkit/speak"
+            href="/toolkit/generator"
             className="inline-flex items-center justify-center gap-2 rounded-lg bg-build-green px-5 py-2.5 text-sm font-semibold text-navy-950 hover:bg-build-green-light transition-colors"
           >
-            Speaking at committee
+            Open letter generator
             <ArrowRight size={16} />
           </Link>
           <Link
-            href="/evidence"
+            href="/toolkit/speak"
             className="inline-flex items-center justify-center gap-2 rounded-lg border border-navy-200 px-5 py-2.5 text-sm font-semibold text-navy-800 hover:border-build-green/40 transition-colors"
           >
-            Evidence Hub
+            Speaking at committee
           </Link>
         </div>
       </div>
