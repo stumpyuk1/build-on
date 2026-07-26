@@ -9,8 +9,25 @@ export const metadata: Metadata = {
     "Find your local planning authority’s online planning applications search — a practical step while national open data catches up.",
 };
 
-const REPORT_ISSUE_URL =
-  "https://github.com/stumpyuk1/build-on/issues/new?template=broken-portal-link.yml";
+const REPORT_EMAIL = "networkcommonsgov@gmail.com";
+
+const reportMailto = `mailto:${REPORT_EMAIL}?subject=${encodeURIComponent(
+  "Broken planning portal link"
+)}&body=${encodeURIComponent(
+  [
+    "Hello,",
+    "",
+    "I would like to report a problem with a planning portal link on the Build On directory.",
+    "",
+    "Council / LPA name: ",
+    "Current URL: ",
+    "Suggested correct URL (if known): ",
+    "What is wrong? (404 / timeout / wrong page / other): ",
+    "",
+    "Extra notes:",
+    "",
+  ].join("\n")
+)}`;
 
 export default function PortalsPage() {
   return (
@@ -68,18 +85,15 @@ export default function PortalsPage() {
               Spot a broken link?
             </h2>
             <p className="text-navy-700 text-sm leading-relaxed mb-4">
-              Councils reorganise sites often. Open a short GitHub issue with the
-              council name, the dead URL, and a better one if you have it — that
-              keeps the directory honest without waiting for a full crawl.
+              Councils reorganise sites often. Email us the council name, the dead
+              URL, and a better one if you have it — that keeps the directory
+              honest without waiting for a full crawl.
             </p>
             <a
-              href={REPORT_ISSUE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+              href={reportMailto}
               className="inline-flex items-center gap-2 text-sm font-semibold text-build-green-dark hover:text-build-green"
             >
-              Report a broken portal link
-              <ExternalLink size={14} />
+              Email {REPORT_EMAIL}
             </a>
           </div>
         </div>

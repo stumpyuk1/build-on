@@ -4,13 +4,27 @@ import { useMemo, useState } from "react";
 import { ExternalLink, Flag, Search } from "lucide-react";
 import { planningPortals, regions } from "@/data/planning-portals";
 
-const REPORT_BASE =
-  "https://github.com/stumpyuk1/build-on/issues/new?template=broken-portal-link.yml";
+const REPORT_EMAIL = "networkcommonsgov@gmail.com";
 
-function reportUrl(name: string, url: string) {
-  const title = encodeURIComponent(`Broken portal link: ${name}`);
-  // Issue forms don't pre-fill body fields via query string; title helps triage.
-  return `${REPORT_BASE}&title=${title}`;
+function reportMailto(name?: string, url?: string) {
+  const subject = encodeURIComponent(
+    name ? `Broken portal link: ${name}` : "Broken planning portal link"
+  );
+  const bodyLines = [
+    "Hello,",
+    "",
+    "I would like to report a problem with a planning portal link on the Build On directory.",
+    "",
+    `Council / LPA name: ${name || ""}`,
+    `Current URL: ${url || ""}`,
+    "Suggested correct URL (if known): ",
+    "What is wrong? (404 / timeout / wrong page / other): ",
+    "",
+    "Extra notes:",
+    "",
+  ];
+  const body = encodeURIComponent(bodyLines.join("\n"));
+  return `mailto:${REPORT_EMAIL}?subject=${subject}&body=${body}`;
 }
 
 export default function PortalsDirectory() {
@@ -66,9 +80,7 @@ export default function PortalsDirectory() {
           {planningPortals.length} authorities in this starter list.
         </p>
         <a
-          href={REPORT_BASE}
-          target="_blank"
-          rel="noopener noreferrer"
+          href={reportMailto()}
           className="inline-flex items-center gap-1.5 text-sm font-medium text-navy-600 hover:text-build-green-dark"
         >
           <Flag size={14} />
@@ -100,9 +112,7 @@ export default function PortalsDirectory() {
               />
             </a>
             <a
-              href={reportUrl(p.name, p.url)}
-              target="_blank"
-              rel="noopener noreferrer"
+              href={reportMailto(p.name, p.url)}
               title={`Report broken link for ${p.name}`}
               className="flex items-center px-2 text-navy-400 hover:text-amber-700 shrink-0"
               aria-label={`Report broken link for ${p.name}`}
