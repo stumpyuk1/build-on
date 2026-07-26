@@ -11,6 +11,7 @@ import {
   ExternalLink,
   ArrowRight,
 } from "lucide-react";
+import MythBusting from "@/components/MythBusting";
 
 export const metadata: Metadata = {
   title: "Evidence Hub",
@@ -75,7 +76,6 @@ export default function EvidencePage() {
           ))}
         </div>
 
-        {/* HOUSING NEED - abbreviated marker: content preserved above in structure */}
         <section id="housing-need" className="scroll-mt-24">
           <div className="flex items-center gap-3 mb-6">
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-build-green/15 text-build-green-dark">
@@ -182,7 +182,6 @@ export default function EvidencePage() {
           </div>
         </section>
 
-        {/* AFFORDABILITY */}
         <section id="affordability" className="scroll-mt-24 border-t border-navy-100 pt-16">
           <div className="flex items-center gap-3 mb-6">
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-build-green/15 text-build-green-dark">
@@ -247,231 +246,71 @@ export default function EvidencePage() {
           </div>
         </section>
 
-        {/* ========== DELIVERY STATS ========== */}
         <section id="delivery" className="scroll-mt-24 border-t border-navy-100 pt-16">
           <div className="flex items-center gap-3 mb-6">
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-build-green/15 text-build-green-dark">
               <BarChart3 size={22} />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-navy-950 tracking-tight">
-              Delivery stats
-            </h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-navy-950 tracking-tight">Delivery stats</h2>
           </div>
-
           <p className="text-navy-700 text-lg leading-relaxed max-w-3xl mb-10">
-            England is not building enough homes. Delivery is well below the
-            pace implied by national targets, and the pipeline of new permissions
-            has been weak — which means the shortfall is not just a one-year
-            problem.
+            England is not building enough homes. Delivery is well below the pace implied by national targets, and the pipeline of new permissions has been weak — which means the shortfall is not just a one-year problem.
           </p>
-
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
             <div className="rounded-xl bg-navy-50 border border-navy-100 p-6">
-              <p className="text-sm font-semibold uppercase tracking-wide text-build-green-dark mb-3">
-                Delivered 2024–25
-              </p>
+              <p className="text-sm font-semibold uppercase tracking-wide text-build-green-dark mb-3">Delivered 2024–25</p>
               <p className="text-3xl font-bold text-navy-950">208,600</p>
-              <p className="mt-2 text-sm text-navy-600 leading-relaxed">
-                Net additional dwellings in England (MHCLG) — down 6% on
-                2023–24 and far short of ~300,000 a year.
-              </p>
+              <p className="mt-2 text-sm text-navy-600 leading-relaxed">Net additional dwellings in England (MHCLG) — down 6% on 2023–24 and far short of ~300,000 a year.</p>
             </div>
             <div className="rounded-xl bg-navy-50 border border-navy-100 p-6">
-              <p className="text-sm font-semibold uppercase tracking-wide text-build-green-dark mb-3">
-                Annual target pace
-              </p>
+              <p className="text-sm font-semibold uppercase tracking-wide text-build-green-dark mb-3">Annual target pace</p>
               <p className="text-3xl font-bold text-navy-950">~300,000</p>
-              <p className="mt-2 text-sm text-navy-600 leading-relaxed">
-                Implied yearly rate to hit 1.5 million homes in England over
-                this Parliament. Last achieved at scale in the late 1960s / early
-                1970s.
-              </p>
+              <p className="mt-2 text-sm text-navy-600 leading-relaxed">Implied yearly rate to hit 1.5 million homes in England over this Parliament. Last achieved at scale in the late 1960s / early 1970s.</p>
             </div>
             <div className="rounded-xl bg-navy-50 border border-navy-100 p-6">
-              <p className="text-sm font-semibold uppercase tracking-wide text-build-green-dark mb-3">
-                Permissions pipeline
-              </p>
+              <p className="text-sm font-semibold uppercase tracking-wide text-build-green-dark mb-3">Permissions pipeline</p>
               <p className="text-3xl font-bold text-navy-950">Weak</p>
-              <p className="mt-2 text-sm text-navy-600 leading-relaxed">
-                Permissions for homes in the year to June 2025 were about
-                221,000 — down on the previous year and part of a multi-year
-                decline in the pipeline.
-              </p>
+              <p className="mt-2 text-sm text-navy-600 leading-relaxed">Permissions for homes in the year to June 2025 were about 221,000 — down on the previous year and part of a multi-year decline in the pipeline.</p>
             </div>
           </div>
-
           <div className="rounded-2xl border border-navy-100 p-6 sm:p-8 mb-12">
-            <h3 className="text-xl font-semibold text-navy-950 mb-4">
-              Completions vs need
-            </h3>
-            <p className="text-navy-700 leading-relaxed mb-4">
-              Net additional dwellings are the official measure of how many homes
-              are added to the stock each year (new builds, conversions and
-              changes of use, minus demolitions). In 2024–25 England added
-              208,600 — roughly two-thirds of the ~300,000 annual pace needed for
-              the government’s 1.5 million target over the Parliament.
-            </p>
+            <h3 className="text-xl font-semibold text-navy-950 mb-4">Completions vs need</h3>
+            <p className="text-navy-700 leading-relaxed mb-4">Net additional dwellings are the official measure of how many homes are added to the stock each year (new builds, conversions and changes of use, minus demolitions). In 2024–25 England added 208,600 — roughly two-thirds of the ~300,000 annual pace needed for the government’s 1.5 million target over the Parliament.</p>
             <ul className="space-y-3 text-navy-700">
-              <li className="flex gap-3">
-                <span className="text-build-green-dark font-bold shrink-0">•</span>
-                <span>
-                  <strong>Below recent averages too.</strong> Over the decade
-                  before the latest dip, net additions averaged a little over
-                  220,000 a year — still well short of 300,000.
-                </span>
-              </li>
-              <li className="flex gap-3">
-                <span className="text-build-green-dark font-bold shrink-0">•</span>
-                <span>
-                  <strong>Parliament progress is behind.</strong> Independent
-                  trackers using official estimates show that cumulative delivery
-                  since July 2024 is only a fraction of the 1.5 million target,
-                  so the annual rate would need to rise substantially to catch up.
-                </span>
-              </li>
-              <li className="flex gap-3">
-                <span className="text-build-green-dark font-bold shrink-0">•</span>
-                <span>
-                  <strong>Local plans and the Housing Delivery Test</strong>{" "}
-                  already treat under-delivery as a planning issue. Supporting
-                  deliverable schemes is one way to close the gap in areas that
-                  are falling short.
-                </span>
-              </li>
+              <li className="flex gap-3"><span className="text-build-green-dark font-bold shrink-0">•</span><span><strong>Below recent averages too.</strong> Over the decade before the latest dip, net additions averaged a little over 220,000 a year — still well short of 300,000.</span></li>
+              <li className="flex gap-3"><span className="text-build-green-dark font-bold shrink-0">•</span><span><strong>Parliament progress is behind.</strong> Independent trackers using official estimates show that cumulative delivery since July 2024 is only a fraction of the 1.5 million target, so the annual rate would need to rise substantially to catch up.</span></li>
+              <li className="flex gap-3"><span className="text-build-green-dark font-bold shrink-0">•</span><span><strong>Local plans and the Housing Delivery Test</strong> already treat under-delivery as a planning issue. Supporting deliverable schemes is one way to close the gap in areas that are falling short.</span></li>
             </ul>
           </div>
-
           <div className="rounded-2xl border border-navy-100 p-6 sm:p-8 mb-12">
-            <h3 className="text-xl font-semibold text-navy-950 mb-4">
-              Pipeline and the cost of delay
-            </h3>
-            <p className="text-navy-700 leading-relaxed mb-4">
-              Homes are not built the year permission is granted. A weak pipeline
-              of approvals today means weaker completions in two to five years’
-              time. Recent years have seen a sustained fall in the number of
-              homes granted permission — industry and government data both point
-              to a pipeline that is too thin to support a step-change in delivery.
-            </p>
+            <h3 className="text-xl font-semibold text-navy-950 mb-4">Pipeline and the cost of delay</h3>
+            <p className="text-navy-700 leading-relaxed mb-4">Homes are not built the year permission is granted. A weak pipeline of approvals today means weaker completions in two to five years’ time. Recent years have seen a sustained fall in the number of homes granted permission — industry and government data both point to a pipeline that is too thin to support a step-change in delivery.</p>
             <ul className="space-y-3 text-navy-700 mb-4">
-              <li className="flex gap-3">
-                <span className="text-build-green-dark font-bold shrink-0">•</span>
-                <span>
-                  <strong>Permissions lag need.</strong> In the year to June
-                  2025, permission was granted for around 221,000 homes in
-                  England — down 7% on the previous year and part of a longer
-                  decline from peaks earlier in the decade.
-                </span>
-              </li>
-              <li className="flex gap-3">
-                <span className="text-build-green-dark font-bold shrink-0">•</span>
-                <span>
-                  <strong>Large schemes take years.</strong> Research on major
-                  developments shows planning and post-permission processes can
-                  stretch for many years. Every year of delay is a year those
-                  homes are not available to households who need them.
-                </span>
-              </li>
-              <li className="flex gap-3">
-                <span className="text-build-green-dark font-bold shrink-0">•</span>
-                <span>
-                  <strong>Delay has wider costs.</strong> Delayed schemes mean
-                  delayed construction jobs, delayed council tax and New Homes
-                  Bonus-type receipts, and continued pressure on temporary
-                  accommodation and private rents. Supporting timely, well-designed
-                  applications helps lock in future supply.
-                </span>
-              </li>
+              <li className="flex gap-3"><span className="text-build-green-dark font-bold shrink-0">•</span><span><strong>Permissions lag need.</strong> In the year to June 2025, permission was granted for around 221,000 homes in England — down 7% on the previous year and part of a longer decline from peaks earlier in the decade.</span></li>
+              <li className="flex gap-3"><span className="text-build-green-dark font-bold shrink-0">•</span><span><strong>Large schemes take years.</strong> Research on major developments shows planning and post-permission processes can stretch for many years. Every year of delay is a year those homes are not available to households who need them.</span></li>
+              <li className="flex gap-3"><span className="text-build-green-dark font-bold shrink-0">•</span><span><strong>Delay has wider costs.</strong> Delayed schemes mean delayed construction jobs, delayed council tax and New Homes Bonus-type receipts, and continued pressure on temporary accommodation and private rents. Supporting timely, well-designed applications helps lock in future supply.</span></li>
             </ul>
-            <p className="text-sm text-navy-600 leading-relaxed border-t border-navy-100 pt-5">
-              Granting permission for a good scheme does not guarantee it is
-              built overnight — but refusing or indefinitely delaying sound
-              proposals guarantees those homes will not be delivered on that
-              site.
-            </p>
+            <p className="text-sm text-navy-600 leading-relaxed border-t border-navy-100 pt-5">Granting permission for a good scheme does not guarantee it is built overnight — but refusing or indefinitely delaying sound proposals guarantees those homes will not be delivered on that site.</p>
           </div>
-
           <div className="rounded-2xl bg-navy-950 text-white p-6 sm:p-8 mb-12">
-            <h3 className="text-xl font-semibold mb-4">
-              How to use this in a representation
-            </h3>
-            <p className="text-navy-200 leading-relaxed mb-4">
-              Keep it short and factual:
-            </p>
+            <h3 className="text-xl font-semibold mb-4">How to use this in a representation</h3>
+            <p className="text-navy-200 leading-relaxed mb-4">Keep it short and factual:</p>
             <blockquote className="border-l-4 border-build-green pl-4 text-navy-100 italic leading-relaxed">
-              “England added only 208,600 net additional dwellings in 2024–25
-              against an implied need of around 300,000 a year to meet national
-              targets. The permissions pipeline has also been weak. Approving
-              this deliverable scheme would make a direct contribution to closing
-              that gap. I support the application subject to appropriate design
-              and affordable housing.”
+              “England added only 208,600 net additional dwellings in 2024–25 against an implied need of around 300,000 a year to meet national targets. The permissions pipeline has also been weak. Approving this deliverable scheme would make a direct contribution to closing that gap. I support the application subject to appropriate design and affordable housing.”
             </blockquote>
           </div>
-
           <div className="mb-16">
-            <h3 className="text-lg font-semibold text-navy-950 mb-4">
-              Primary sources
-            </h3>
+            <h3 className="text-lg font-semibold text-navy-950 mb-4">Primary sources</h3>
             <ul className="space-y-2 text-sm text-navy-700">
-              <li>
-                <a
-                  href="https://www.gov.uk/government/statistics/housing-supply-net-additional-dwellings-england-2024-to-2025"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-build-green-dark hover:underline"
-                >
-                  MHCLG – Net additional dwellings, England 2024–25
-                  <ExternalLink size={14} />
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://www.gov.uk/government/statistics/planning-applications-in-england-april-to-june-2025/planning-applications-in-england-april-to-june-2025-statistical-release"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-build-green-dark hover:underline"
-                >
-                  MHCLG – Planning applications in England (homes granted
-                  permission)
-                  <ExternalLink size={14} />
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://fullfact.org/government-tracker/1-5-million-homes/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-build-green-dark hover:underline"
-                >
-                  Full Fact – Tracker on the 1.5 million homes target
-                  <ExternalLink size={14} />
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://www.gov.uk/government/collections/net-supply-of-housing"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-build-green-dark hover:underline"
-                >
-                  MHCLG – Net supply of housing (collection)
-                  <ExternalLink size={14} />
-                </a>
-              </li>
+              <li><a href="https://www.gov.uk/government/statistics/housing-supply-net-additional-dwellings-england-2024-to-2025" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-build-green-dark hover:underline">MHCLG – Net additional dwellings, England 2024–25 <ExternalLink size={14} /></a></li>
+              <li><a href="https://www.gov.uk/government/statistics/planning-applications-in-england-april-to-june-2025/planning-applications-in-england-april-to-june-2025-statistical-release" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-build-green-dark hover:underline">MHCLG – Planning applications in England (homes granted permission) <ExternalLink size={14} /></a></li>
+              <li><a href="https://fullfact.org/government-tracker/1-5-million-homes/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-build-green-dark hover:underline">Full Fact – Tracker on the 1.5 million homes target <ExternalLink size={14} /></a></li>
+              <li><a href="https://www.gov.uk/government/collections/net-supply-of-housing" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-build-green-dark hover:underline">MHCLG – Net supply of housing (collection) <ExternalLink size={14} /></a></li>
             </ul>
           </div>
         </section>
 
-        <section id="myths" className="scroll-mt-24 border-t border-navy-100 pt-16 mt-12">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-build-green/15 text-build-green-dark">
-              <BookOpen size={22} />
-            </div>
-            <h2 className="text-2xl font-bold text-navy-950">Myth-busting</h2>
-          </div>
-          <p className="text-navy-600 max-w-2xl">
-            Coming next — common objections answered with evidence and examples.
-          </p>
-        </section>
+        <MythBusting />
 
         <div className="mt-16 rounded-2xl bg-navy-50 border border-navy-100 p-8 text-center">
           <h3 className="text-xl font-semibold text-navy-950 mb-3">
