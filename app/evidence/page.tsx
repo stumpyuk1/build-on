@@ -356,18 +356,229 @@ export default function EvidencePage() {
           </div>
         </section>
 
-        {/* Placeholders for remaining sections */}
+        {/* ========== AFFORDABILITY ========== */}
         <section id="affordability" className="scroll-mt-24 border-t border-navy-100 pt-16">
-          <div className="flex items-center gap-3 mb-4">
+          <div className="flex items-center gap-3 mb-6">
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-build-green/15 text-build-green-dark">
               <TrendingUp size={22} />
             </div>
-            <h2 className="text-2xl font-bold text-navy-950">Affordability</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-navy-950 tracking-tight">
+              Affordability
+            </h2>
           </div>
-          <p className="text-navy-600 max-w-2xl">
-            Coming next — house price to earnings ratios, rent burden, and what
-            they mean for local need arguments.
+
+          <p className="text-navy-700 text-lg leading-relaxed max-w-3xl mb-10">
+            Homes in England are far less affordable relative to earnings than
+            they were a generation ago. That is not mainly because people earn
+            less — it is because prices have risen much faster than wages, in
+            large part because supply has not kept up with demand.
           </p>
+
+          {/* Key ratio stats */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <div className="rounded-xl bg-navy-50 border border-navy-100 p-6">
+              <p className="text-sm font-semibold uppercase tracking-wide text-build-green-dark mb-3">
+                England today
+              </p>
+              <p className="text-3xl font-bold text-navy-950">7.6×</p>
+              <p className="mt-2 text-sm text-navy-600 leading-relaxed">
+                Median house price to median full-time earnings in England in
+                2025 (ONS). Median home £300,000; median earnings £39,300.
+              </p>
+            </div>
+
+            <div className="rounded-xl bg-navy-50 border border-navy-100 p-6">
+              <p className="text-sm font-semibold uppercase tracking-wide text-build-green-dark mb-3">
+                Late 1990s
+              </p>
+              <p className="text-3xl font-bold text-navy-950">~3×</p>
+              <p className="mt-2 text-sm text-navy-600 leading-relaxed">
+                House price to earnings ratios were typically around 3 times in
+                the mid-to-late 1990s (Nationwide / long-run series). Around 2000
+                the England median was roughly 4–4.5 times.
+              </p>
+            </div>
+
+            <div className="rounded-xl bg-navy-50 border border-navy-100 p-6">
+              <p className="text-sm font-semibold uppercase tracking-wide text-build-green-dark mb-3">
+                Peak stretch
+              </p>
+              <p className="text-3xl font-bold text-navy-950">~9–10×</p>
+              <p className="mt-2 text-sm text-navy-600 leading-relaxed">
+                Ratios peaked near or above 9–10 times around 2021–22 in some
+                official and lender measures before a modest improvement as
+                earnings caught up a little.
+              </p>
+            </div>
+          </div>
+
+          {/* What the rise means */}
+          <div className="rounded-2xl border border-navy-100 p-6 sm:p-8 mb-12">
+            <h3 className="text-xl font-semibold text-navy-950 mb-4">
+              What the rise in the ratio means
+            </h3>
+            <p className="text-navy-700 leading-relaxed mb-4">
+              A generation ago, a typical home cost roughly three to four times
+              typical full-time earnings. Today it costs closer to seven or eight
+              times — and in high-demand areas far more. That shift is the core of
+              the affordability problem for first-time buyers and many renters
+              trying to save a deposit.
+            </p>
+            <ul className="space-y-3 text-navy-700">
+              <li className="flex gap-3">
+                <span className="text-build-green-dark font-bold shrink-0">•</span>
+                <span>
+                  <strong>Deposit barrier.</strong> Higher price-to-earnings
+                  ratios mean larger deposits in absolute terms. High rents make
+                  it harder to save, locking more people out of ownership.
+                </span>
+              </li>
+              <li className="flex gap-3">
+                <span className="text-build-green-dark font-bold shrink-0">•</span>
+                <span>
+                  <strong>Regional extremes.</strong> London and parts of the
+                  Greater South East have long had much higher ratios than the
+                  national median. Affordability pressures are most severe where
+                  jobs and opportunity are concentrated.
+                </span>
+              </li>
+              <li className="flex gap-3">
+                <span className="text-build-green-dark font-bold shrink-0">•</span>
+                <span>
+                  <strong>Modest recent improvement is not the full story.</strong>{" "}
+                  Since 2021 earnings have grown faster than prices in many
+                  areas, so the national ratio has eased a little (ONS 2025:
+                  7.6). It remains far above long-run norms and above levels that
+                  younger households experienced in the 1990s and early 2000s.
+                </span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Supply and the ratio */}
+          <div className="rounded-2xl border border-navy-100 p-6 sm:p-8 mb-12">
+            <h3 className="text-xl font-semibold text-navy-950 mb-4">
+              Why more supply improves the earnings ratio
+            </h3>
+            <p className="text-navy-700 leading-relaxed mb-4">
+              House prices are set by the balance of demand and supply. When
+              demand rises (more households, higher incomes, cheaper credit) and
+              supply cannot respond, prices absorb the pressure. England’s housing
+              supply is unusually inelastic — research finds local supply
+              responds only weakly to price rises over multi-decade periods.
+            </p>
+            <ul className="space-y-3 text-navy-700 mb-4">
+              <li className="flex gap-3">
+                <span className="text-build-green-dark font-bold shrink-0">•</span>
+                <span>
+                  <strong>Inelastic supply amplifies price rises.</strong>{" "}
+                  Academic and government-backed work (including studies of
+                  English local authorities) shows that tighter planning and
+                  physical constraints reduce how much new building responds to
+                  higher prices. Demand shocks then feed more strongly into
+                  prices — and into the price-to-earnings ratio.
+                </span>
+              </li>
+              <li className="flex gap-3">
+                <span className="text-build-green-dark font-bold shrink-0">•</span>
+                <span>
+                  <strong>More homes, lower long-run prices relative to incomes.</strong>{" "}
+                  Increasing the rate of housebuilding does not instantly reset
+                  prices, but sustained higher supply is the main structural way
+                  to prevent the ratio drifting higher and, over time, to bring
+                  it down. That is why planning decisions that unlock
+                  well-located, well-designed homes matter for affordability.
+                </span>
+              </li>
+              <li className="flex gap-3">
+                <span className="text-build-green-dark font-bold shrink-0">•</span>
+                <span>
+                  <strong>Interest rates are not the whole story.</strong> Low
+                  rates and credit conditions affect how much people can borrow,
+                  but they do not explain why ratios stayed high even when rates
+                  rose, or why shortages are worst in high-demand cities with the
+                  tightest supply response.
+                </span>
+              </li>
+            </ul>
+            <p className="text-sm text-navy-600 leading-relaxed border-t border-navy-100 pt-5">
+              In practical terms: supporting schemes that add net new homes in
+              areas of need is one of the few levers that directly addresses the
+              supply side of the affordability problem.
+            </p>
+          </div>
+
+          {/* Representation wording */}
+          <div className="rounded-2xl bg-navy-950 text-white p-6 sm:p-8 mb-12">
+            <h3 className="text-xl font-semibold mb-4">
+              How to use this in a representation
+            </h3>
+            <p className="text-navy-200 leading-relaxed mb-4">
+              A short, factual point is usually enough:
+            </p>
+            <blockquote className="border-l-4 border-build-green pl-4 text-navy-100 italic leading-relaxed">
+              “Median house prices in England are still around 7–8 times median
+              full-time earnings — roughly double the ratio typical in the late
+              1990s. Constrained supply is a major reason prices have outpaced
+              incomes. This scheme would add to local housing supply and, over
+              time, help ease that pressure. I support the application subject to
+              good design and appropriate affordable housing.”
+            </blockquote>
+          </div>
+
+          {/* Sources */}
+          <div className="mb-16">
+            <h3 className="text-lg font-semibold text-navy-950 mb-4">
+              Primary sources
+            </h3>
+            <ul className="space-y-2 text-sm text-navy-700">
+              <li>
+                <a
+                  href="https://www.ons.gov.uk/peoplepopulationandcommunity/housing/bulletins/housingaffordabilityinenglandandwales/2025"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-build-green-dark hover:underline"
+                >
+                  ONS – Housing affordability in England and Wales: 2025
+                  <ExternalLink size={14} />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.ons.gov.uk/peoplepopulationandcommunity/housing/datasets/ratioofhousepricetoworkplacebasedearningslowerquartileandmedian"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-build-green-dark hover:underline"
+                >
+                  ONS – House price to workplace-based earnings ratio (dataset)
+                  <ExternalLink size={14} />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.nationwide.co.uk/media/hpi/reports/affordability-stretched-but-gradually-improving"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-build-green-dark hover:underline"
+                >
+                  Nationwide – Affordability and house price to earnings analysis
+                  <ExternalLink size={14} />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.gov.uk/government/publications/housing-affordability-and-productivity/housing-affordability-and-productivity-accessible-version"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-build-green-dark hover:underline"
+                >
+                  Government analysis – Housing affordability and productivity
+                  (historical ratios)
+                  <ExternalLink size={14} />
+                </a>
+              </li>
+            </ul>
+          </div>
         </section>
 
         <section id="delivery" className="scroll-mt-24 border-t border-navy-100 pt-16 mt-12">
