@@ -140,6 +140,73 @@ export default function EvidencePage() {
             </div>
           </div>
 
+          {/* Future need */}
+          <div className="rounded-2xl border border-navy-100 p-6 sm:p-8 mb-12">
+            <h3 className="text-xl font-semibold text-navy-950 mb-4">
+              Future need — and the historic backlog
+            </h3>
+            <p className="text-navy-700 leading-relaxed mb-6">
+              Two complementary figures are useful when arguing for more homes:
+              how many we need to build <em>going forward</em>, and how large the
+              accumulated shortfall already is.
+            </p>
+
+            <div className="space-y-5 text-navy-700">
+              <div>
+                <p className="font-semibold text-navy-950 mb-1">
+                  Government target (England)
+                </p>
+                <p className="leading-relaxed">
+                  The current government aims to deliver{" "}
+                  <strong>1.5 million homes in England over this Parliament</strong>{" "}
+                  (roughly 2024–2029). That implies an average pace of around{" "}
+                  <strong>300,000 homes a year</strong>. Recent delivery
+                  (208,600 net additions in 2024–25) is running well below that
+                  level.
+                </p>
+              </div>
+
+              <div>
+                <p className="font-semibold text-navy-950 mb-1">
+                  Standard Method (planning system minimum)
+                </p>
+                <p className="leading-relaxed">
+                  The official <strong>Standard Method</strong> calculates a
+                  minimum local housing need figure for each English local
+                  planning authority. Under recent versions of the method, the
+                  England-wide total has sat in the region of{" "}
+                  <strong>~300,000 dwellings a year</strong>. This is the
+                  starting point used in local plans and is the figure most
+                  relevant to individual planning decisions.
+                </p>
+              </div>
+
+              <div>
+                <p className="font-semibold text-navy-950 mb-1">
+                  Historic backlog (Centre for Cities)
+                </p>
+                <p className="leading-relaxed">
+                  Separate analysis by the Centre for Cities estimates that
+                  Britain has a cumulative backlog of{" "}
+                  <strong>around 4.3 million homes</strong> that were never
+                  built, relative to comparable European countries. Even at
+                  300,000 homes a year, clearing that backlog would take many
+                  decades. Their 2023 report,{" "}
+                  <em>The housebuilding crisis: The UK’s 4 million missing
+                  homes</em>, is the main source for this figure.
+                </p>
+              </div>
+            </div>
+
+            <p className="mt-6 text-sm text-navy-600 leading-relaxed border-t border-navy-100 pt-5">
+              In short: the Standard Method and government target describe the{" "}
+              <strong>forward rate</strong> of building needed; the Centre for
+              Cities figure describes the <strong>accumulated shortfall</strong>.
+              Both point in the same direction — England needs substantially more
+              homes than it is currently delivering.
+            </p>
+          </div>
+
           {/* Why it matters */}
           <div className="rounded-2xl border border-navy-100 p-6 sm:p-8 mb-12">
             <h3 className="text-xl font-semibold text-navy-950 mb-4">
@@ -236,6 +303,30 @@ export default function EvidencePage() {
                 >
                   MHCLG – Live tables on rents, lettings and tenancies (waiting
                   lists)
+                  <ExternalLink size={14} />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.gov.uk/guidance/housing-and-economic-development-needs-assessments"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-build-green-dark hover:underline"
+                >
+                  MHCLG – Housing and economic needs assessments (Standard
+                  Method guidance)
+                  <ExternalLink size={14} />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.centreforcities.org/publication/the-housebuilding-crisis/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-build-green-dark hover:underline"
+                >
+                  Centre for Cities – The housebuilding crisis: The UK’s 4
+                  million missing homes (2023)
                   <ExternalLink size={14} />
                 </a>
               </li>
