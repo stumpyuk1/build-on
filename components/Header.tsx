@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import clsx from "clsx";
@@ -21,15 +22,15 @@ export default function Header() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="flex flex-col leading-none">
-              <span className="text-xl font-bold tracking-tight text-white group-hover:text-build-green transition-colors">
-                BUILD
-              </span>
-              <span className="text-xl font-bold tracking-tight text-build-green -mt-1">
-                ON
-              </span>
-            </div>
+          <Link href="/" className="flex items-center gap-2 group shrink-0">
+            <Image
+              src="/logo.svg"
+              alt="Build On"
+              width={120}
+              height={40}
+              className="h-9 w-auto"
+              priority
+            />
           </Link>
 
           {/* Desktop nav */}

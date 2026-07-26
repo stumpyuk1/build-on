@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 40" fill="none">
+  <!-- Stacked steps / upward arrow mark -->
+  <g transform="translate(2, 6)">
+    <rect x="0" y="20" width="10" height="8" rx="1.5" fill="#2DD4BF"/>
+    <rect x="12" y="12" width="10" height="16" rx="1.5" fill="#2DD4BF"/>
+    <rect x="24" y="4" width="10" height="24" rx="1.5" fill="#14B8A6"/>
+    <!-- subtle arrow tip -->
+    <path d="M29 0 L34 6 L24 6 Z" fill="#5EEAD4"/>
+  </g>
+  <!-- Wordmark -->
+  <text x="42" y="18" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#FFFFFF" letter-spacing="0.5">BUILD</text>
+  <text x="42" y="33" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#2DD4BF" letter-spacing="0.5">ON</text>
+</svg>
