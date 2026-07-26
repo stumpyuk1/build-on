@@ -8,6 +8,7 @@ import clsx from "clsx";
 
 const navItems = [
   { href: "/map", label: "Map" },
+  { href: "/portals", label: "Portals" },
   { href: "/toolkit", label: "Toolkit" },
   { href: "/evidence", label: "Evidence" },
   { href: "/groups", label: "Local Groups" },
@@ -21,7 +22,6 @@ export default function Header() {
     <header className="sticky top-0 z-50 bg-navy-950/95 backdrop-blur border-b border-navy-800">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group shrink-0">
             <Image
               src="/logo.svg"
@@ -33,7 +33,6 @@ export default function Header() {
             />
           </Link>
 
-          {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (
               <Link
@@ -52,7 +51,6 @@ export default function Header() {
             </Link>
           </nav>
 
-          {/* Mobile menu button */}
           <button
             type="button"
             className="md:hidden p-2 text-navy-200 hover:text-white"
@@ -64,7 +62,6 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Mobile nav */}
       <div
         className={clsx(
           "md:hidden border-t border-navy-800 bg-navy-950",

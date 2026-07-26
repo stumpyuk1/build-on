@@ -26,6 +26,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/portals" className="hover:text-build-green transition-colors">
+                  Planning portals
+                </Link>
+              </li>
+              <li>
                 <Link href="/toolkit" className="hover:text-build-green transition-colors">
                   Support Toolkit
                 </Link>
