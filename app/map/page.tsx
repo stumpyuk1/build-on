@@ -1,21 +1,11 @@
 import type { Metadata } from "next";
-import dynamic from "next/dynamic";
+import MapLoader from "@/components/MapLoader";
 
 export const metadata: Metadata = {
   title: "Planning Map",
   description:
     "Browse live planning applications across England using open government data.",
 };
-
-// Leaflet needs the browser, so we dynamic-import the map client component
-const MapClient = dynamic(() => import("@/components/MapClient"), {
-  ssr: false,
-  loading: () => (
-    <div className="h-[70vh] w-full bg-navy-100 animate-pulse flex items-center justify-center text-navy-500">
-      Loading map…
-    </div>
-  ),
-});
 
 export default function MapPage() {
   return (
@@ -30,7 +20,7 @@ export default function MapPage() {
         </div>
       </div>
       <div className="flex-1 relative">
-        <MapClient />
+        <MapLoader />
       </div>
     </div>
   );
