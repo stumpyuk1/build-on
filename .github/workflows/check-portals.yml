@@ -1,0 +1,45 @@
+name: Check planning portal links
+
+on:
+  schedule:
+    # Mondays 06:00 UTC
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+  push:
+    paths:
+      - "data/planning-portals.ts"
+      - "scripts/check-portals.mjs"
+      - ".github/workflows/check-portals.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Link health
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Check portal URLs
+        env:
+          # Fail the job only if more than this many links are broken
+          PORTAL_FAIL_THRESHOLD: "10"
+        run: node scripts/check-portals.mjs
+
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: portal-link-report
+          path: artifacts/portal-link-report.json
+          if-no-files-found: ignore
+          retention-days: 30
