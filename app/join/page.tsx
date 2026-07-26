@@ -3,8 +3,36 @@ import { Mail, Users, Share2 } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Join",
-  description: "Get involved with Build On – register interest, join a local group, or stay updated.",
+  description:
+    "Get involved with Build On – register interest, join a local group, or stay updated.",
 };
+
+const CONTACT_EMAIL = "networkcommonsgov@gmail.com";
+
+const subscribeMailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
+  "Build On — subscribe to updates"
+)}&body=${encodeURIComponent(
+  [
+    "Please add me to occasional Build On updates.",
+    "",
+    "My email: ",
+    "Area / local authority (optional): ",
+    "",
+  ].join("\n")
+)}`;
+
+const localActionMailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
+  "Build On — local action"
+)}&body=${encodeURIComponent(
+  [
+    "I am interested in forming or joining local Build On activity.",
+    "",
+    "My area / local authority: ",
+    "My email: ",
+    "Anything else to add:",
+    "",
+  ].join("\n")
+)}`;
 
 export default function JoinPage() {
   return (
@@ -28,7 +56,7 @@ export default function JoinPage() {
               <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-build-green/15 text-build-green-dark">
                 <Mail size={22} />
               </div>
-              <div>
+              <div className="min-w-0 flex-1">
                 <h2 className="text-lg font-semibold text-navy-950">
                   Stay updated
                 </h2>
@@ -36,9 +64,15 @@ export default function JoinPage() {
                   Occasional updates on new tools, major applications and local
                   activity. No spam.
                 </p>
-                <form className="mt-5 flex flex-col sm:flex-row gap-3">
+                <form
+                  action={`mailto:${CONTACT_EMAIL}`}
+                  method="get"
+                  className="mt-5 flex flex-col sm:flex-row gap-3"
+                >
+                  <input type="hidden" name="subject" value="Build On — subscribe to updates" />
                   <input
                     type="email"
+                    name="body"
                     placeholder="Your email"
                     className="flex-1 rounded-lg border border-navy-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-build-green/50"
                     required
@@ -50,8 +84,16 @@ export default function JoinPage() {
                     Subscribe
                   </button>
                 </form>
-                <p className="mt-2 text-xs text-navy-400">
-                  Form is a placeholder for now – backend coming soon.
+                <p className="mt-3 text-xs text-navy-500">
+                  Opens your email app to message{" "}
+                  <a
+                    href={subscribeMailto}
+                    className="text-build-green-dark underline"
+                  >
+                    {CONTACT_EMAIL}
+                  </a>
+                  . Or write to that address directly with subject “Build On —
+                  subscribe”.
                 </p>
               </div>
             </div>
@@ -71,15 +113,15 @@ export default function JoinPage() {
                   roughly where you are and we will connect people as activity
                   grows.
                 </p>
-                <p className="mt-4 text-sm text-navy-500">
+                <p className="mt-4 text-sm text-navy-600">
                   Email{" "}
                   <a
-                    href="mailto:hello@buildon.org.uk"
-                    className="text-build-green-dark underline"
+                    href={localActionMailto}
+                    className="text-build-green-dark underline font-medium"
                   >
-                    hello@buildon.org.uk
+                    {CONTACT_EMAIL}
                   </a>{" "}
-                  (placeholder address) with your area.
+                  with your area.
                 </p>
               </div>
             </div>

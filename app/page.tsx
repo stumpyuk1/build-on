@@ -22,10 +22,10 @@ export default function HomePage() {
             </p>
             <div className="mt-10 flex flex-col sm:flex-row gap-4">
               <Link
-                href="/map"
+                href="/portals"
                 className="inline-flex items-center justify-center gap-2 rounded-lg bg-build-green px-6 py-3.5 text-base font-semibold text-navy-950 hover:bg-build-green-light transition-colors"
               >
-                Explore the map
+                Find applications near you
                 <ArrowRight size={18} />
               </Link>
               <Link
@@ -57,7 +57,7 @@ export default function HomePage() {
               {
                 icon: Map,
                 title: "Find applications",
-                body: "Browse live planning applications near you using open government data. Filter by type, status and location.",
+                body: "Use the planning portals directory to open your council’s public search and find live applications. National open data is still maturing — council portals remain the reliable route for now.",
               },
               {
                 icon: FileText,
@@ -121,18 +121,19 @@ export default function HomePage() {
             <div className="rounded-2xl bg-navy-950 p-8 sm:p-10 text-white">
               <BarChart3 className="text-build-green mb-6" size={32} />
               <h3 className="text-xl font-semibold mb-4">
-                Powered by open data
+                Powered by open data — where it works
               </h3>
               <p className="text-navy-300 leading-relaxed mb-6">
-                We use the official planning.data.gov.uk platform so that the
-                applications you see are current and authoritative. No scraping
-                of outdated council portals.
+                We use planning.data.gov.uk where coverage is useful, and the
+                council portals directory while national feeds for new housing
+                remain incomplete. Honest tools beat a polished map that misses
+                the schemes that matter.
               </p>
               <Link
-                href="/evidence"
+                href="/portals"
                 className="inline-flex items-center gap-2 text-build-green font-medium hover:text-build-green-light transition-colors"
               >
-                Explore the Evidence Hub
+                Open the portals directory
                 <ArrowRight size={16} />
               </Link>
             </div>
@@ -152,7 +153,7 @@ export default function HomePage() {
           </p>
           <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">
             <Link
-              href="/map"
+              href="/portals"
               className="inline-flex items-center justify-center rounded-lg bg-navy-950 px-6 py-3.5 text-base font-semibold text-white hover:bg-navy-800 transition-colors"
             >
               Find applications near you
