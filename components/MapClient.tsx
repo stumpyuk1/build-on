@@ -77,6 +77,7 @@ export default function MapClient() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [usingSamples, setUsingSamples] = useState(false);
+  const [filterNote, setFilterNote] = useState<string | null>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -88,6 +89,7 @@ export default function MapClient() {
     async function load() {
       setLoading(true);
       setError(null);
+      setFilterNote(null);
       try {
         const res = await fetch("/api/planning?limit=80");
         if (!res.ok) throw new Error(`API returned ${res.status}`);
@@ -96,10 +98,14 @@ export default function MapClient() {
         if (data.applications && data.applications.length > 0) {
           setApplications(data.applications);
           setUsingSamples(false);
+          if (data.note) setFilterNote(data.note);
         } else {
-          // Official dataset is incomplete – fall back to samples
           setApplications(sampleApplications);
           setUsingSamples(true);
+          setFilterNote(
+            data.note ||
+              "No new-housing applications with usable coordinates found in this batch. Showing sample schemes."
+          );
         }
       } catch (err) {
         console.error(err);
@@ -130,12 +136,13 @@ export default function MapClient() {
         </div>
       )}
 
-      {(usingSamples || error) && !loading && (
-        <div className="absolute top-3 left-3 right-3 z-[1000] max-w-md">
+      {(usingSamples || error || filterNote) && !loading && (
+        <div className="absolute top-3 left-3 right-3 z-[1000] max-w-lg">
           <div className="rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-sm px-3 py-2 shadow-sm">
             {error
               ? `${error}. Showing sample applications.`
-              : "Official planning-application data is still incomplete. Showing sample applications for demonstration."}
+              : filterNote ||
+                "Filtered for new housing schemes. Official data coverage is still limited."}
           </div>
         </div>
       )}
@@ -159,8 +166,11 @@ export default function MapClient() {
                 {app.reference && (
                   <p className="text-navy-500 text-xs mt-0.5">Ref: {app.reference}</p>
                 )}
+                {app.description && (
+                  <p className="text-navy-600 mt-1 text-xs line-clamp-3">{app.description}</p>
+                )}
                 {app.organisation && (
-                  <p className="text-navy-600 mt-1">{app.organisation}</p>
+                  <p className="text-navy-500 mt-1 text-xs">{app.organisation}</p>
                 )}
                 {app.startDate && (
                   <p className="text-xs mt-1 text-navy-500">Submitted: {app.startDate}</p>
