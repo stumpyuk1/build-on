@@ -6,17 +6,17 @@ Build On is a UK campaign platform that helps people support well-designed housi
 
 ## What this is
 
-- Interactive map of planning applications (powered by open data from [planning.data.gov.uk](https://www.planning.data.gov.uk))
-- Support toolkit for writing representations and speaking at committee
-- Evidence hub with housing need and affordability context
-- Local groups directory (in progress)
+- **Planning map** — undecided larger housing schemes aggregated via [UK PlanIt](https://www.planit.org.uk/) (filtered; HMO / change-of-use-to-HMO excluded), with links to comment on the council portal
+- **Planning portals directory** — searchable links to local authority public-access sites
+- **Support toolkit** — writing guide, speaking guide, and letter generator
+- **Evidence hub** — housing need, affordability, delivery stats, and myth-busting
+- **Local groups** — directory in progress; register interest via the Join page
 
 ## Tech
 
-- Next.js 15 (App Router)
-- TypeScript
-- Tailwind CSS
+- Next.js 15 (App Router) + TypeScript + Tailwind CSS
 - Leaflet + OpenStreetMap for maps
+- PlanIt API (proxied at `/api/planning`, cached to respect ~1 request/minute)
 - Deployed on Vercel
 
 ## Getting started
@@ -28,9 +28,19 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+### Useful scripts
+
+```bash
+npm run check-portals   # health-check LPA portal URLs in data/planning-portals.ts
+```
+
+## Contact
+
+Project email: **networkcommonsgov@gmail.com** (updates, local action, broken portal reports).
+
 ## Status
 
-Early MVP. Map currently shows sample markers. Live data integration and representation generator are next.
+Public MVP: map (PlanIt), portals directory, toolkit, evidence hub. Groups directory and richer map filters still to come.
 
 ## Inspired by
 

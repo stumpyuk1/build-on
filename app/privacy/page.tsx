@@ -5,6 +5,8 @@ export const metadata: Metadata = {
   description: "Privacy notice for the Build On website.",
 };
 
+const CONTACT_EMAIL = "networkcommonsgov@gmail.com";
+
 export default function PrivacyPage() {
   return (
     <div className="bg-white">
@@ -23,20 +25,21 @@ export default function PrivacyPage() {
             that purpose and will not share it with third parties for marketing.
           </p>
           <p>
-            We use open government planning data. We do not collect precise
-            location data from your browser beyond what is necessary to display
-            maps you request.
+            The planning map uses aggregated open data from UK PlanIt
+            (planit.org.uk), drawn from local planning authority registers. We
+            do not collect precise location data from your browser beyond what
+            is necessary to display maps you request.
           </p>
           <p>
             A fuller privacy policy will be published before any mailing list or
             user accounts go live. Questions:{" "}
             <a
-              href="mailto:hello@buildon.org.uk"
+              href={`mailto:${CONTACT_EMAIL}`}
               className="text-build-green-dark underline"
             >
-              hello@buildon.org.uk
-            </a>{" "}
-            (placeholder).
+              {CONTACT_EMAIL}
+            </a>
+            .
           </p>
         </div>
       </div>
