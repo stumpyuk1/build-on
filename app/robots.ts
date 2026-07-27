@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 const BASE_URL =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
-  "https://build-on.vercel.app";
+  "https://build-on.org.uk";
 
 export default function robots(): MetadataRoute.Robots {
   return {
