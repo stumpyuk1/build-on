@@ -171,7 +171,7 @@ export default function MapClient() {
         />
         <FitBounds applications={applications} />
         {applications.map((app) => (
-          <Marker key={app.id} position={[app.lat, a.lng]}>
+          <Marker key={app.id} position={[app.lat, app.lng]}>
             <Popup>
               <div className="text-sm min-w-[200px] max-w-[280px]">
                 <p className="font-semibold text-navy-900">{app.title}</p>
