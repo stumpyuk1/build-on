@@ -44,13 +44,15 @@ The live site is intended to deploy from the `main` branch of this repository.
 1. Push the repo to GitHub (`stumpyuk1/build-on` or your fork).
 2. In [Vercel](https://vercel.com), **Add New Project** → import the GitHub repo.
 3. Framework preset: **Next.js** (auto-detected). Build command `next build`, output as default.
-4. Environment variables (optional but recommended):
-
-   | Name | Purpose |
-   |------|---------|
-   | `NEXT_PUBLIC_SITE_URL` | Canonical site origin, **no trailing slash** (e.g. `https://your-domain.com`). Used by `sitemap.xml` and `robots.txt`. Defaults to `https://build-on.vercel.app` if unset. |
-
+4. Environment variables (see table below).
 5. Deploy. Vercel will build on every push to the production branch.
+
+### Environment variables
+
+| Name | Required | Purpose |
+|------|----------|---------|
+| `NEXT_PUBLIC_SITE_URL` | Recommended | Canonical site origin, **no trailing slash** (e.g. `https://your-domain.com`). Used by `sitemap.xml`, `robots.txt`, and Open Graph. Defaults to `https://build-on.vercel.app` if unset. |
+| `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | Optional | Google Search Console **HTML tag** verification token (content value only — not the full meta tag). |
 
 ### Ongoing deploys
 
@@ -71,6 +73,28 @@ The live site is intended to deploy from the `main` branch of this repository.
 |-----|--------|
 | `/sitemap.xml` | `app/sitemap.ts` |
 | `/robots.txt` | `app/robots.ts` (allows `/`, disallows `/api/`, points at the sitemap) |
+
+## Google Search Console
+
+Verification is done with a **meta tag** injected from an environment variable (no HTML file in the repo).
+
+1. Open [Google Search Console](https://search.google.com/search-console) → **Add property** → **URL prefix** → enter your live site URL (must match `NEXT_PUBLIC_SITE_URL`, including `https://`).
+2. Choose verification method **HTML tag**.
+3. Google shows something like:
+   ```html
+   <meta name="google-site-verification" content="TOKEN_HERE" />
+   ```
+   Copy **only** the `content` value (`TOKEN_HERE`).
+4. In Vercel → Project → **Settings** → **Environment Variables**, add:
+   - Name: `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`
+   - Value: the token
+   - Environments: Production (and Preview if you want to test there)
+5. **Redeploy** production so the meta tag is baked into the HTML.
+6. Confirm the tag is present: view page source on the homepage and search for `google-site-verification`.
+7. Back in Search Console, click **Verify**.
+8. After verification, submit the sitemap: **Sitemaps** → add `sitemap.xml` (full URL e.g. `https://your-domain.com/sitemap.xml`).
+
+Alternative methods (DNS TXT, HTML file upload) work too, but the env-var meta tag keeps verification in config rather than the repo.
 
 ## Contact
 

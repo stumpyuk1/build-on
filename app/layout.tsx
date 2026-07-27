@@ -11,7 +11,14 @@ const inter = Inter({
   display: "swap",
 });
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
+  "https://build-on.vercel.app";
+
+const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
     default: "Build On | Homes. Infrastructure. Action.",
     template: "%s | Build On",
@@ -36,7 +43,12 @@ export const metadata: Metadata = {
       "Evidence-based support for well-designed homes and infrastructure.",
     type: "website",
     locale: "en_GB",
+    url: siteUrl,
   },
+  // Set NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION in Vercel to the token from Search Console
+  ...(googleVerification
+    ? { verification: { google: googleVerification } }
+    : {}),
 };
 
 export default function RootLayout({
