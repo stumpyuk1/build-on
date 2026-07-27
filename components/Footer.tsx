@@ -74,12 +74,12 @@ export default function Footer() {
           <p>
             © {new Date().getFullYear()} Build On. Open data powered by{" "}
             <a
-              href="https://www.planning.data.gov.uk"
+              href="https://www.planit.org.uk"
               target="_blank"
               rel="noopener noreferrer"
               className="underline hover:text-build-green"
             >
-              planning.data.gov.uk
+              planit.org.uk
             </a>
             .
           </p>
