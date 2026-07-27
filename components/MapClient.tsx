@@ -5,10 +5,10 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
-// Fix default marker icons in Next.js
 const DefaultIcon = L.icon({
   iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
-  iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+  iconRetinaUrl:
+    "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
   shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
   iconSize: [25, 41],
   iconAnchor: [12, 41],
@@ -21,14 +21,19 @@ type Application = {
   id: string;
   title: string;
   reference: string;
+  address?: string;
   lat: number;
   lng: number;
   startDate?: string;
+  consultationEnd?: string;
   description?: string;
   organisation?: string;
+  dwellings?: number | null;
+  councilUrl?: string;
+  commentUrl?: string;
+  planitUrl?: string;
 };
 
-// Fallback sample data if the live API returns nothing usable
 const sampleApplications: Application[] = [
   {
     id: "sample-1",
@@ -78,6 +83,7 @@ export default function MapClient() {
   const [error, setError] = useState<string | null>(null);
   const [usingSamples, setUsingSamples] = useState(false);
   const [filterNote, setFilterNote] = useState<string | null>(null);
+  const [source, setSource] = useState<string | null>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -98,18 +104,19 @@ export default function MapClient() {
         if (data.applications && data.applications.length > 0) {
           setApplications(data.applications);
           setUsingSamples(false);
+          setSource(data.source || "planit.org.uk");
           if (data.note) setFilterNote(data.note);
         } else {
           setApplications(sampleApplications);
           setUsingSamples(true);
           setFilterNote(
             data.note ||
-              "No new-housing applications with usable coordinates found in this batch. Showing sample schemes."
+              "No undecided larger schemes returned. Showing samples — use the portals directory to search your council."
           );
         }
       } catch (err) {
         console.error(err);
-        setError("Could not load live planning data");
+        setError("Could not load PlanIt planning data");
         setApplications(sampleApplications);
         setUsingSamples(true);
       } finally {
@@ -142,7 +149,12 @@ export default function MapClient() {
             {error
               ? `${error}. Showing sample applications.`
               : filterNote ||
-                "Filtered for new housing schemes. Official data coverage is still limited."}
+                "Undecided larger schemes from PlanIt. Data is cached to respect API rate limits."}
+            {source && !error && (
+              <span className="block text-xs mt-1 text-amber-800/80">
+                Source: {source}
+              </span>
+            )}
           </div>
         </div>
       )}
@@ -154,33 +166,61 @@ export default function MapClient() {
         scrollWheelZoom={true}
       >
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · Planning data <a href="https://www.planit.org.uk/">UK PlanIt</a>'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <FitBounds applications={applications} />
         {applications.map((app) => (
-          <Marker key={app.id} position={[app.lat, app.lng]}>
+          <Marker key={app.id} position={[app.lat, a.lng]}>
             <Popup>
-              <div className="text-sm min-w-[180px]">
+              <div className="text-sm min-w-[200px] max-w-[280px]">
                 <p className="font-semibold text-navy-900">{app.title}</p>
                 {app.reference && (
-                  <p className="text-navy-500 text-xs mt-0.5">Ref: {app.reference}</p>
+                  <p className="text-navy-500 text-xs mt-0.5">
+                    Ref: {app.reference}
+                  </p>
+                )}
+                {app.address && app.address !== app.title && (
+                  <p className="text-navy-600 text-xs mt-0.5">{app.address}</p>
                 )}
                 {app.description && (
-                  <p className="text-navy-600 mt-1 text-xs line-clamp-3">{app.description}</p>
+                  <p className="text-navy-600 mt-1 text-xs line-clamp-3">
+                    {app.description}
+                  </p>
                 )}
                 {app.organisation && (
                   <p className="text-navy-500 mt-1 text-xs">{app.organisation}</p>
                 )}
-                {app.startDate && (
-                  <p className="text-xs mt-1 text-navy-500">Submitted: {app.startDate}</p>
+                {app.consultationEnd && (
+                  <p className="text-xs mt-1 text-navy-500">
+                    Consultation ends: {app.consultationEnd}
+                  </p>
                 )}
-                <a
-                  href={`/toolkit?ref=${encodeURIComponent(app.reference || app.id)}`}
-                  className="inline-block mt-2 text-build-green-dark font-medium hover:underline"
-                >
-                  Support this scheme →
-                </a>
+                {app.startDate && (
+                  <p className="text-xs text-navy-500">
+                    Started: {app.startDate}
+                  </p>
+                )}
+                <div className="mt-2 flex flex-col gap-1">
+                  {(app.commentUrl || app.councilUrl) && (
+                    <a
+                      href={app.commentUrl || app.councilUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-build-green-dark font-medium hover:underline text-xs"
+                    >
+                      Open on council portal →
+                    </a>
+                  )}
+                  <a
+                    href={`/toolkit/generator?ref=${encodeURIComponent(
+                      app.reference || app.id
+                    )}`}
+                    className="text-build-green-dark font-medium hover:underline text-xs"
+                  >
+                    Support this scheme →
+                  </a>
+                </div>
               </div>
             </Popup>
           </Marker>
