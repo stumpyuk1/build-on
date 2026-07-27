@@ -31,8 +31,85 @@ type PlanitRecord = {
     consultation_end_date?: string;
     comment_url?: string;
     comment_date?: string;
+    application_type?: string;
+    development_type?: string;
   };
 };
+
+/**
+ * Drop HMO / change-of-use conversions — controversial and outside Build On’s
+ * focus on new housing supply. Matches description, type fields, and common refs.
+ */
+function isExcludedHmoOrChangeOfUse(rec: PlanitRecord): boolean {
+  const text = [
+    rec.description,
+    rec.reference,
+    rec.uid,
+    rec.other_fields?.application_type,
+    rec.other_fields?.development_type,
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
+
+  if (!text.trim()) return false;
+
+  // Explicit HMO / multi-occupation language
+  if (
+    /\bhmo\b/.test(text) ||
+    text.includes("house in multiple occupation") ||
+    text.includes("house of multiple occupation") ||
+    text.includes("houses in multiple occupation") ||
+    text.includes("multiple occupation") ||
+    text.includes("sui generis hmo") ||
+    /\bc4\b.*\bhmo\b|\bhmo\b.*\bc4\b/.test(text) ||
+    text.includes("large hmo") ||
+    text.includes("small hmo")
+  ) {
+    return true;
+  }
+
+  // Bedsits / shared housing conversions often tied to the same debates
+  if (
+    text.includes("bedsit") ||
+    text.includes("bed-sit") ||
+    text.includes("bed sits") ||
+    (text.includes("shared house") && text.includes("change of use")) ||
+    (text.includes("shared housing") && text.includes("change of use"))
+  ) {
+    return true;
+  }
+
+  // Change of use → HMO / C4 / bedsits (and reverse wording)
+  if (
+    text.includes("change of use") ||
+    text.includes("change-of-use") ||
+    /\bcou\b/.test(text)
+  ) {
+    if (
+      /\bhmo\b/.test(text) ||
+      text.includes("multiple occupation") ||
+      text.includes("bedsit") ||
+      text.includes("c4 dwelling") ||
+      text.includes("use class c4") ||
+      text.includes("class c4") ||
+      text.includes("to c4") ||
+      text.includes("to an hmo") ||
+      text.includes("to hmo")
+    ) {
+      return true;
+    }
+  }
+
+  // Common reference / type codes
+  if (
+    /\bco\s*u\b/.test(text) && /\bhmo\b|c4|multiple occupation/.test(text)
+  ) {
+    return true;
+  }
+
+  return false;
+}
 
 function parseDwellings(rec: PlanitRecord): number | null {
   const raw = rec.other_fields?.n_dwellings;
@@ -59,13 +136,15 @@ function looksResidential(description: string): boolean {
 }
 
 function keepRecord(rec: PlanitRecord): boolean {
+  if (isExcludedHmoOrChangeOfUse(rec)) return false;
+
   const dwellings = parseDwellings(rec);
   if (dwellings !== null) return dwellings >= MIN_DWELLINGS;
 
   // No reliable count — keep Large majors, and Medium only if description looks residential
   const size = (rec.app_size || "").toLowerCase();
   const desc = rec.description || "";
-  if (size.includes("large")) return looksResidential(desc) || true;
+  if (size.includes("large")) return true;
   if (size.includes("medium")) return looksResidential(desc);
   return looksResidential(desc);
 }
@@ -130,6 +209,8 @@ export async function GET(request: NextRequest) {
   upstream.set("recent", recent);
   upstream.set("pg_sz", String(Math.min(limit * 2, 200)));
   upstream.set("compress", "on");
+  // Exclude HMO-ish text server-side where PlanIt search supports NOT
+  upstream.set("search", "-hmo -\"house in multiple occupation\" -\"multiple occupation\"");
   upstream.set(
     "select",
     [
@@ -151,6 +232,8 @@ export async function GET(request: NextRequest) {
       "other_fields->consultation_end_date",
       "other_fields->comment_url",
       "other_fields->comment_date",
+      "other_fields->application_type",
+      "other_fields->development_type",
     ].join(",")
   );
 
@@ -207,12 +290,12 @@ export async function GET(request: NextRequest) {
         totalUpstream: data.count ?? records.length,
         applications,
         source: "planit.org.uk",
-        filter: `Undecided + Large/Medium; prefer n_dwellings >= ${MIN_DWELLINGS}`,
+        filter: `Undecided + Large/Medium; n_dwellings >= ${MIN_DWELLINGS} where known; exclude HMO / change-of-use to HMO`,
         cacheSeconds: CACHE_SECONDS,
         note:
           applications.length === 0
             ? "No matching undecided schemes in this PlanIt batch. Try again later or use the portals directory."
-            : `Showing undecided larger schemes from PlanIt (cached ~${CACHE_SECONDS / 60} min). Dwelling counts are approximate where derived from descriptions.`,
+            : `Showing undecided larger schemes from PlanIt (cached ~${CACHE_SECONDS / 60} min). HMO and change-of-use-to-HMO applications are excluded. Dwelling counts are approximate where derived from descriptions.`,
         attribution:
           "Application data aggregated by UK PlanIt (planit.org.uk) from local planning authority registers.",
       },
