@@ -9,6 +9,7 @@ import {
   BookOpen,
   Map,
   Sparkles,
+  Info,
 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -34,6 +35,39 @@ export default function ToolkitPage() {
       </div>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+        {/* How submission works */}
+        <div className="mb-8 rounded-2xl border border-navy-100 bg-navy-50/80 px-5 py-4 sm:px-6 sm:py-5 flex gap-3 sm:gap-4">
+          <Info
+            className="text-build-green-dark shrink-0 mt-0.5"
+            size={22}
+            aria-hidden
+          />
+          <div className="text-sm text-navy-700 leading-relaxed">
+            <p className="font-semibold text-navy-950 mb-1">
+              Submitting your letter on the council’s system
+            </p>
+            <p>
+              Planning applications are managed by each local planning authority,
+              not by a single national website. Councils use different public
+              access systems, so there is no uniform “comment here” button for
+              the whole country. In practice you will usually need to open the
+              application on <strong className="text-navy-950">that council’s
+              own planning portal</strong> and, in many cases,{" "}
+              <strong className="text-navy-950">register an account</strong>{" "}
+              before you can paste and submit your letter of support. Build On
+              helps you draft the wording; the official submission always happens
+              on the authority’s site. Use the{" "}
+              <Link
+                href="/portals"
+                className="text-build-green-dark font-medium underline hover:text-build-green"
+              >
+                portals directory
+              </Link>{" "}
+              or the council link on a map marker to find the right place.
+            </p>
+          </div>
+        </div>
+
         {/* Featured: letter generator */}
         <Link
           href="/toolkit/generator"
