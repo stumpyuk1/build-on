@@ -1,5 +1,13 @@
 import Link from "next/link";
-import { Map, FileText, Users, BarChart3, ArrowRight, CheckCircle2 } from "lucide-react";
+import {
+  Map,
+  FileText,
+  Users,
+  BarChart3,
+  ArrowRight,
+  CheckCircle2,
+  Scale,
+} from "lucide-react";
 
 export default function HomePage() {
   return (
@@ -16,9 +24,9 @@ export default function HomePage() {
               Support the homes and infrastructure Britain needs
             </h1>
             <p className="mt-6 text-lg sm:text-xl text-navy-200 leading-relaxed max-w-2xl">
-              Build On makes it easy to find local planning applications and
-              submit clear, evidence-based support — so well-designed schemes
-              get a fair hearing.
+              Build On helps you find planning applications for new homes and
+              submit clear, evidence-based support — whether you live next door
+              or further afield — so well-designed schemes get a fair hearing.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row gap-4">
               <Link
@@ -34,6 +42,110 @@ export default function HomePage() {
               >
                 How to support a scheme
               </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Why support — moral appeal + eligibility */}
+      <section className="py-16 sm:py-20 bg-white border-b border-navy-100">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl">
+            <h2 className="text-3xl font-bold text-navy-950 tracking-tight">
+              Why your support matters
+            </h2>
+            <p className="mt-5 text-navy-700 text-lg leading-relaxed">
+              Britain is short of homes. Waiting lists are long, rents and prices
+              lock too many people out of stable housing, and we keep building
+              fewer homes than the country needs. That is not an abstract policy
+              problem — it is about whether the next generation can put down
+              roots, whether key workers can live near their work, and whether
+              communities can grow without pricing their own children out.
+            </p>
+            <p className="mt-4 text-navy-700 text-lg leading-relaxed">
+              Planning decisions are shaped by the voices that turn up. For years
+              the loudest organised voices have often been those opposing new
+              development. Silence from people who want more good homes is read,
+              fairly or not, as indifference. A short, factual letter of support
+              is one of the simplest democratic acts available: it tells officers
+              and councillors that approval is not only about weathering
+              objections — there is a constituency for delivery too.
+            </p>
+          </div>
+
+          <div className="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+            <div className="rounded-2xl border border-build-green/30 bg-build-green/5 p-6 sm:p-8">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-build-green/20 text-build-green-dark">
+                  <Scale size={22} />
+                </div>
+                <h3 className="text-xl font-semibold text-navy-950">
+                  You do not have to be a local resident
+                </h3>
+              </div>
+              <p className="text-navy-700 leading-relaxed">
+                In England, <strong className="text-navy-950">anyone can respond</strong> to a
+                planning consultation. You do not need to live next door, in the
+                same ward, or even in the same town. Neighbour notification
+                letters are about who the council must <em>tell</em> — not who is
+                <em>allowed to comment</em>. National and local interest groups,
+                workers, family members and concerned citizens are all entitled
+                to submit representations.
+              </p>
+              <p className="mt-4 text-navy-700 leading-relaxed">
+                What carries weight is not your postcode, but whether your points
+                are <strong className="text-navy-950">material planning considerations</strong>:
+                housing need, design quality, suitability of the site, transport,
+                and how the scheme fits adopted policy. A calm, specific letter
+                beats a pile of identical slogans — from near or far.
+              </p>
+              <p className="mt-4 text-sm text-navy-600">
+                Government guidance is explicit: anyone can respond to a planning
+                consultation. Build On helps you do it well.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-navy-100 p-6 sm:p-8">
+              <h3 className="text-xl font-semibold text-navy-950 mb-4">
+                A moral case for taking part
+              </h3>
+              <ul className="space-y-4 text-navy-700">
+                {[
+                  "If only opponents write in, the file looks one-sided — even when the wider public wants homes built.",
+                  "Supporting a well-designed scheme is not an attack on local democracy; it is participation in it.",
+                  "You can care about design, infrastructure and character and still support more housing where the site is right.",
+                  "The housing shortage will not ease if only the people already housed shape every decision.",
+                ].map((point) => (
+                  <li key={point} className="flex items-start gap-3">
+                    <CheckCircle2
+                      className="mt-0.5 shrink-0 text-build-green-dark"
+                      size={20}
+                    />
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-6 text-navy-700 leading-relaxed">
+                Build On will not ask you to cheer every application. We focus on
+                helping people support <strong className="text-navy-950">good schemes</strong> —
+                with evidence, not noise — so the country can start closing the
+                gap between the homes we need and the homes we approve.
+              </p>
+              <div className="mt-6 flex flex-col sm:flex-row gap-3">
+                <Link
+                  href="/toolkit"
+                  className="inline-flex items-center justify-center gap-2 rounded-lg bg-build-green px-5 py-2.5 text-sm font-semibold text-navy-950 hover:bg-build-green-light transition-colors"
+                >
+                  Write a representation
+                  <ArrowRight size={16} />
+                </Link>
+                <Link
+                  href="/evidence"
+                  className="inline-flex items-center justify-center gap-2 rounded-lg border border-navy-200 px-5 py-2.5 text-sm font-semibold text-navy-800 hover:border-build-green/40 transition-colors"
+                >
+                  See the evidence
+                </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -62,7 +174,7 @@ export default function HomePage() {
               {
                 icon: FileText,
                 title: "Use the toolkit",
-                body: "Generate clear, evidence-based representations in minutes. Pull in local housing need stats automatically.",
+                body: "Generate clear, evidence-based representations in minutes. Pull in housing need stats and keep the focus on material planning points.",
               },
               {
                 icon: Users,
@@ -87,7 +199,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Why it matters */}
+      {/* Why organised support matters */}
       <section className="py-16 sm:py-24 bg-navy-50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -148,8 +260,8 @@ export default function HomePage() {
             Ready to get involved?
           </h2>
           <p className="mt-4 text-navy-600 text-lg">
-            Whether you want to support a single scheme near you or help build
-            a local group, start here.
+            Find a scheme, write a clear letter of support, and help tip the
+            balance toward the homes the country needs.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">
             <Link
