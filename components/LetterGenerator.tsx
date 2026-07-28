@@ -47,7 +47,7 @@ export default function LetterGenerator() {
   const [reference, setReference] = useState("");
   const [address, setAddress] = useState("");
   const [name, setName] = useState("");
-  const [capacity, setCapacity] = useState("local resident");
+  const [capacity, setCapacity] = useState("resident of the United Kingdom");
   const [supportType, setSupportType] = useState<"full" | "conditional">("conditional");
   const [reasons, setReasons] = useState<ReasonId[]>(["need", "location"]);
   const [extra, setExtra] = useState("");
@@ -100,6 +100,10 @@ export default function LetterGenerator() {
       supportType === "full"
         ? "I support this application and ask the Council to grant planning permission."
         : "I support this application subject to appropriate design and affordable housing provision, and ask the Council to grant planning permission."
+    );
+
+    paragraphs.push(
+      "For the avoidance of doubt, I do not know the applicant, I have no financial interest in this development, and I am not connected to the construction industry."
     );
 
     return paragraphs.join("\n\n");
@@ -183,6 +187,9 @@ export default function LetterGenerator() {
               onChange={(e) => setCapacity(e.target.value)}
               className="w-full rounded-lg border border-navy-200 px-3 py-2.5 text-navy-900 focus:outline-none focus:ring-2 focus:ring-build-green/40 focus:border-build-green bg-white"
             >
+              <option value="resident of the United Kingdom">
+                Resident of the United Kingdom
+              </option>
               <option value="local resident">Local resident</option>
               <option value="local worker">Local worker</option>
               <option value="supporter of better housing supply">
@@ -296,7 +303,7 @@ export default function LetterGenerator() {
           id="generated-letter"
           readOnly
           value={letter}
-          rows={18}
+          rows={20}
           className="w-full flex-1 rounded-xl border border-navy-200 bg-navy-50 px-4 py-4 text-sm text-navy-900 leading-relaxed focus:outline-none resize-y min-h-[320px]"
         />
         <p className="mt-3 text-xs text-navy-500 leading-relaxed">
