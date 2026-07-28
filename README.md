@@ -97,7 +97,7 @@ After changing env vars, **redeploy** production.
 
 ## Contact
 
-Project email: **networkcommonsgov@gmail.com** (updates, local action, broken portal reports).
+Public contact: **hello@build-on.org.uk** (updates, local action, broken portal reports). Forwards to the campaign inbox.
 
 ## Status
 

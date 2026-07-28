@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     "Find your local planning authority’s online planning applications search — a practical step while national open data catches up.",
 };
 
-const REPORT_EMAIL = "networkcommonsgov@gmail.com";
+const REPORT_EMAIL = "hello@build-on.org.uk";
 
 const reportMailto = `mailto:${REPORT_EMAIL}?subject=${encodeURIComponent(
   "Broken planning portal link"

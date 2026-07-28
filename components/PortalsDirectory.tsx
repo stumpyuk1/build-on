@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { ExternalLink, Flag, Search } from "lucide-react";
 import { planningPortals, regions } from "@/data/planning-portals";
 
-const REPORT_EMAIL = "networkcommonsgov@gmail.com";
+const REPORT_EMAIL = "hello@build-on.org.uk";
 
 function reportMailto(name?: string, url?: string) {
   const subject = encodeURIComponent(

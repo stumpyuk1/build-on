@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: "Privacy notice for the Build On website.",
 };
 
-const CONTACT_EMAIL = "networkcommonsgov@gmail.com";
+const CONTACT_EMAIL = "hello@build-on.org.uk";
 
 export default function PrivacyPage() {
   return (

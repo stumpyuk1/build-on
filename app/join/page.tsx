@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     "Get involved with Build On – register interest, join a local group, or stay updated.",
 };
 
-const CONTACT_EMAIL = "networkcommonsgov@gmail.com";
+const CONTACT_EMAIL = "hello@build-on.org.uk";
 
 const subscribeMailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
   "Build On — subscribe to updates"
