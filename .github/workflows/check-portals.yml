@@ -31,7 +31,8 @@ jobs:
 
       - name: Check portal URLs
         env:
-          # Fail the job only if more than this many links are broken
+          # Fail only when hard-broken links (404 / 5xx / network) exceed this.
+          # HTTP 403 is treated as a soft block (bot/WAF) and is not counted.
           PORTAL_FAIL_THRESHOLD: "10"
         run: node scripts/check-portals.mjs
 
