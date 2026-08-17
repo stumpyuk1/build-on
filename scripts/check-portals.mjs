@@ -4,9 +4,13 @@
  * Usage: node scripts/check-portals.mjs
  *
  * Exit codes:
- *   0 — all OK, or broken count at/under threshold
- *   1 — broken count above threshold (default 10)
+ *   0 — all OK, or hard-broken count at/under threshold
+ *   1 — hard-broken count above threshold (default 10)
  *   2 — could not parse portal data
+ *
+ * HTTP 403 is treated as a soft failure (likely bot/WAF block on
+ * datacentre IPs). It is reported but does not count toward the
+ * fail threshold. 404, 5xx and network/timeout errors do.
  */
 
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
@@ -63,12 +67,15 @@ async function checkUrl(url) {
     clearTimeout(timer);
     const ms = Date.now() - started;
     const ok = res.status >= 200 && res.status < 400;
+    // 403 is common from council WAFs blocking Actions IPs — soft fail only
+    const softBlocked = res.status === 403;
     return {
       ok,
+      softBlocked,
       status: res.status,
       finalUrl: res.url,
       ms,
-      error: ok ? null : `HTTP ${res.status}`,
+      error: ok ? null : softBlocked ? "HTTP 403 (soft — likely bot block)" : `HTTP ${res.status}`,
     };
   } catch (err) {
     clearTimeout(timer);
@@ -77,7 +84,14 @@ async function checkUrl(url) {
       err?.name === "AbortError"
         ? `Timeout after ${TIMEOUT_MS}ms`
         : err?.message || String(err);
-    return { ok: false, status: null, finalUrl: null, ms, error: message };
+    return {
+      ok: false,
+      softBlocked: false,
+      status: null,
+      finalUrl: null,
+      ms,
+      error: message,
+    };
   }
 }
 
@@ -101,7 +115,8 @@ async function mapPool(items, limit, fn) {
 
 function printTable(rows) {
   for (const r of rows) {
-    const mark = r.ok ? "OK " : "FAIL";
+    let mark = "OK ";
+    if (!r.ok) mark = r.softBlocked ? "SOFT" : "FAIL";
     const status = r.status ?? "-";
     console.log(
       `${mark}  ${String(status).padStart(3)}  ${r.ms}ms  ${r.name}  ${r.url}` +
@@ -134,26 +149,32 @@ async function main() {
     return { ...p, ...check };
   });
 
-  const broken = results.filter((r) => !r.ok);
-  const healthy = results.length - broken.length;
+  const notOk = results.filter((r) => !r.ok);
+  const softBlocked = notOk.filter((r) => r.softBlocked);
+  // Hard broken = real failures that count toward the threshold (404, 5xx, network)
+  const hardBroken = notOk.filter((r) => !r.softBlocked);
+  const healthy = results.length - notOk.length;
 
   console.log("\n--- Results ---");
-  printTable(results.filter((r) => !r.ok));
-  if (broken.length === 0) {
+  printTable(notOk);
+  if (notOk.length === 0) {
     console.log("All links responded OK.");
   }
 
   console.log(
-    `\nSummary: ${healthy} OK, ${broken.length} broken (threshold ${FAIL_THRESHOLD})`
+    `\nSummary: ${healthy} OK, ${softBlocked.length} soft-blocked (403), ${hardBroken.length} hard-broken (threshold ${FAIL_THRESHOLD})`
   );
 
   const report = {
     checkedAt: new Date().toISOString(),
     total: results.length,
     healthy,
-    broken: broken.length,
+    softBlocked: softBlocked.length,
+    hardBroken: hardBroken.length,
+    // kept for backwards compatibility with older consumers
+    broken: hardBroken.length,
     failThreshold: FAIL_THRESHOLD,
-    failures: broken.map((r) => ({
+    failures: hardBroken.map((r) => ({
       name: r.name,
       region: r.region,
       url: r.url,
@@ -161,6 +182,17 @@ async function main() {
       finalUrl: r.finalUrl,
       error: r.error,
       ms: r.ms,
+      softBlocked: false,
+    })),
+    softBlocks: softBlocked.map((r) => ({
+      name: r.name,
+      region: r.region,
+      url: r.url,
+      status: r.status,
+      finalUrl: r.finalUrl,
+      error: r.error,
+      ms: r.ms,
+      softBlocked: true,
     })),
   };
 
@@ -174,17 +206,22 @@ async function main() {
 
   // Also emit a machine-readable line for Actions
   console.log(
-    `::notice title=Portal link check::${healthy} OK, ${broken.length} broken`
+    `::notice title=Portal link check::${healthy} OK, ${softBlocked.length} soft-blocked (403), ${hardBroken.length} hard-broken`
   );
-  for (const f of broken) {
+  for (const f of hardBroken) {
     console.log(
       `::warning title=Broken portal link::${f.name} — ${f.url} (${f.error})`
     );
   }
+  for (const f of softBlocked) {
+    console.log(
+      `::notice title=Soft-blocked portal (403)::${f.name} — ${f.url}`
+    );
+  }
 
-  if (broken.length > FAIL_THRESHOLD) {
+  if (hardBroken.length > FAIL_THRESHOLD) {
     console.error(
-      `\nFailing: ${broken.length} broken links exceeds threshold of ${FAIL_THRESHOLD}.`
+      `\nFailing: ${hardBroken.length} hard-broken links exceeds threshold of ${FAIL_THRESHOLD} (403 soft-blocks ignored).`
     );
     process.exit(1);
   }
