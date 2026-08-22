@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import clsx from "clsx";
 
@@ -11,6 +11,7 @@ const navItems = [
   { href: "/portals", label: "Portals" },
   { href: "/toolkit", label: "Toolkit" },
   { href: "/evidence", label: "Evidence" },
+  { href: "/blog", label: "Blog" },
   { href: "/groups", label: "Local Groups" },
   { href: "/about", label: "About" },
 ];
@@ -18,10 +19,19 @@ const navItems = [
 export default function Header() {
   const [open, setOpen] = useState(false);
 
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [open]);
+
   return (
     <header className="sticky top-0 z-50 bg-navy-950/95 backdrop-blur border-b border-navy-800">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
+        <div className="flex h-16 items-center justify-between gap-4">
           <Link href="/" className="flex items-center gap-2 group shrink-0">
             <Image
               src="/logo.svg"
@@ -33,7 +43,8 @@ export default function Header() {
             />
           </Link>
 
-          <nav className="hidden md:flex items-center gap-8">
+          {/* Desktop / large tablet horizontal nav */}
+          <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
             {navItems.map((item) => (
               <Link
                 key={item.href}
@@ -51,29 +62,34 @@ export default function Header() {
             </Link>
           </nav>
 
+          {/* MENU burger — phone & smaller tablets */}
           <button
             type="button"
-            className="md:hidden p-2 text-navy-200 hover:text-white"
-            onClick={() => setOpen(!open)}
-            aria-label="Toggle menu"
+            className="lg:hidden inline-flex items-center gap-2 rounded-md border border-navy-700 bg-navy-900/80 px-3 py-2 text-navy-100 hover:border-build-green/50 hover:text-white transition-colors"
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            aria-controls="site-menu"
+            aria-label={open ? "Close menu" : "Open menu"}
           >
-            {open ? <X size={24} /> : <Menu size={24} />}
+            {open ? <X size={20} aria-hidden /> : <Menu size={20} aria-hidden />}
+            <span className="text-sm font-semibold tracking-wide">MENU</span>
           </button>
         </div>
       </div>
 
       <div
+        id="site-menu"
         className={clsx(
-          "md:hidden border-t border-navy-800 bg-navy-950",
+          "lg:hidden border-t border-navy-800 bg-navy-950",
           open ? "block" : "hidden"
         )}
       >
-        <div className="space-y-1 px-4 pb-4 pt-2">
+        <nav className="space-y-1 px-4 pb-4 pt-2" aria-label="Site">
           {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="block rounded-md px-3 py-2 text-base font-medium text-navy-200 hover:bg-navy-900 hover:text-white"
+              className="block rounded-md px-3 py-2.5 text-base font-medium text-navy-200 hover:bg-navy-900 hover:text-white"
               onClick={() => setOpen(false)}
             >
               {item.label}
@@ -81,12 +97,12 @@ export default function Header() {
           ))}
           <Link
             href="/join"
-            className="mt-2 block rounded-md bg-build-green px-3 py-2 text-center text-base font-semibold text-navy-950"
+            className="mt-2 block rounded-md bg-build-green px-3 py-2.5 text-center text-base font-semibold text-navy-950"
             onClick={() => setOpen(false)}
           >
             Join
           </Link>
-        </div>
+        </nav>
       </div>
     </header>
   );
