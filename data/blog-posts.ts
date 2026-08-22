@@ -15,6 +15,44 @@ export type BlogPost = {
  */
 export const blogPosts: BlogPost[] = [
   {
+    slug: "perverse-incentives-in-english-planning",
+    title: "Perverse incentives in English planning",
+    subtitle:
+      "Why the system systematically favours constraint, delay and under-delivery — beyond the infrastructure-viability trap",
+    date: "2026-08-19",
+    author: "Build On",
+    excerpt:
+      "English planning and local government finance are stacked with incentives that reward caution over delivery. Here are the most significant ones — and how they reinforce each other.",
+    body: [
+      "There are a wide set of perverse incentives embedded in the English planning and local government finance system. These incentives systematically favour constraint, delay, and under-delivery over the rapid provision of homes.",
+      "Here are the most significant ones, beyond the infrastructure-viability trap already discussed.",
+      "1. Concentrated local costs versus diffuse national benefits",
+      "New housing imposes visible, immediate costs on existing residents (traffic, school places, change to views, pressure on services). The benefits — lower prices, labour mobility, intergenerational equity, higher national output — are diffuse, long-term, and mostly felt elsewhere.",
+      "Local politicians therefore face strong electoral incentives to resist or dilute large allocations. National targets exist on paper, but the political pain is local. This is classic public-choice territory: decision-makers respond to the voters who can punish them, not to the abstract national interest.",
+      "2. Weak fiscal rewards for growth",
+      "English local authorities capture relatively little ongoing financial benefit from new homes. Council tax is low by international standards and is subject to equalisation and national controls. The New Homes Bonus was always partial and is being wound down or replaced by weaker mechanisms.",
+      "By contrast, business rates (especially from commercial development) can be more lucrative. The result is a structural bias: residential growth brings costs and political risk with limited lasting fiscal upside, while commercial schemes are often preferred. Recent multi-year settlements have tried to improve this by letting councils keep more of the council-tax base growth, but the incentive remains far weaker than in systems where local government retains a larger share of the uplift from development.",
+      "3. Affordable housing requirements as a rigid, front-loaded tax",
+      "Section 106 affordable housing obligations are set as policy targets (often 30–40 % or higher) and then frequently negotiated downwards on viability grounds. This creates several distortions: uncertainty and delay while viability is argued; a tendency for high headline targets that are known to be unviable in many locations, forcing site-by-site haggling; and transfer of value from landowner/developer to the public sector in a way that is opaque and unpredictable, rather than a transparent land-value capture mechanism.",
+      "In lower-value or heavily constrained sites, the obligation can kill the scheme entirely rather than deliver any affordable homes. The intention is socially worthy. The incentive effect is to reduce overall supply, particularly of marginal sites.",
+      "4. Cumulative regulatory layering",
+      "Developers face a growing stack of requirements that each make sense in isolation but compound destructively: Community Infrastructure Levy plus residual Section 106; Biodiversity Net Gain; nutrient neutrality and water quality rules; the Future Homes Standard and net-zero building regulations; minimum space standards; design codes and heritage constraints.",
+      "Each adds cost and risk. Because many of these costs are fixed or front-loaded, they hit smaller sites and SME builders especially hard. Large housebuilders can absorb the complexity; many smaller ones cannot. The net effect is reduced competition and lower overall output.",
+      "5. The Green Belt as political sacred cow",
+      "The Green Belt was originally intended to prevent urban sprawl and encourage regeneration. In practice it has become a near-absolute constraint that forces development further out (leapfrogging), inflates land values inside the boundary, and prevents logical urban extensions even where infrastructure and sustainability arguments are strong.",
+      "Political incentives strongly favour defending the designation rather than reviewing it rigorously. “Grey belt” reforms attempt to create limited flexibility, but the underlying incentive structure remains: any release is treated as a political defeat.",
+      "6. Five-year land supply and the tilted balance",
+      "The requirement for a five-year supply of deliverable sites, and the “tilted balance” that applies when it is absent, was meant to force councils to plan positively. In practice it has produced perverse effects on both sides. Councils face pressure to show optimistic trajectories or under-allocate difficult sites. Developers are incentivised to challenge the supply calculation and promote speculative applications.",
+      "The result is often more planning by appeal, greater uncertainty, and a focus on short-term deliverability accounting rather than long-term strategic growth.",
+      "7. Build-out incentives and land-market dynamics",
+      "In a system where planning permission is scarce and valuable, the rational strategy for a landowner or large developer is often to release homes slowly to protect local prices rather than flood the market. Permissions do not automatically equal completions. Attempts to force faster build-out (penalties, use-it-or-lose-it rules) run into commercial realities and can simply reduce the incentive to seek permission in the first place.",
+      "How they interact",
+      "These incentives reinforce one another. Weak fiscal rewards make councils more sensitive to local opposition. High affordable-housing and infrastructure demands make sites more fragile. Green Belt constraints push development onto harder sites that then fail viability tests. The discretionary nature of the system allows all of these pressures to be expressed through case-by-case negotiation rather than clear rules.",
+      "The overall result is a system that is formally committed to higher housing numbers while containing multiple mechanisms that reward delay, under-scaling, and risk avoidance. Fixing any single element (housing targets, Green Belt, viability guidance) without addressing the underlying incentive structure tends to produce only temporary or partial improvement.",
+      "This is why supply remains sticky even when national policy appears more pro-housing. The arithmetic and the politics both push in the same direction: caution over delivery.",
+    ],
+  },
+  {
     slug: "when-the-numbers-do-the-refusing",
     title: "When the numbers do the refusing",
     subtitle:
