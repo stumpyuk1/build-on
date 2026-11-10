@@ -10,6 +10,24 @@ export type BlogPost = {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "easing-the-burdens",
+    title: "Government costs make up 57% of a new London flat’s price",
+    subtitle: "A new Centre for Policy Studies paper shows why planning reform alone will not get the houses built",
+    date: "2026-11-10",
+    author: "Build On",
+    excerpt: "Taxes, levies and mandated design rules now account for more than half the viable sale price of a typical new London flat, and two-fifths of a Home Counties house. Starts are falling. The CPS has modelled why.",
+    body: [
+      "Planning reform is necessary. It is not sufficient. That is the blunt finding of a new paper from the Centre for Policy Studies, published on 10 November 2026. English housebuilding starts have fallen from 182,070 in 2022 to 124,830 in 2025. The gains from planning changes have been cancelled by higher costs that government itself has imposed.",
+      "Edward Donovan and Ben Hopkinson model two schemes. One is a 100-unit brownfield apartment block in Inner London (Camden), with 35% affordable housing. The other is a greenfield scheme of 100 three-bedroom houses in Chelmsford. They work out the minimum sale price at which the scheme is viable — the ‘clearing price’ — and then strip out every tax, levy, planning delay and mandated extra that government has added.",
+      "The London flat has to sell for £775,000 before anyone will build it. Of that, £442,000 (57%) is government-imposed cost. Without those costs the viable price falls to £333,000. In the Home Counties the house needs to sell for £535,000; government costs are £224,000 (42%). Strip them out and the figure is £311,000. The paper notes that a developer must create £10 of pre-tax, pre-mandate value to keep £1 of profit in London, and £8 outside it. The effective burden on profit is 90% and 88% respectively.",
+      "The biggest single item is affordable housing obligations: £195,000 per private London flat (25% of the price) and £105,000 per Home Counties house. Then come planning and the delay that comes with it (£62,000 and £45,000). Mandated design extras follow: dual-aspect flats, second staircases above 18 metres, balconies, the Future Homes Standard, biodiversity net gain, carbon offsets. Taxes and levies include stamp duty, the Community Infrastructure Levy, the Residential Property Developer Tax, the Building Safety Levy, landfill tax (whose lower rate has more than doubled and is on a path to quintuple) and corporation tax. Individually many of these can be justified. Together they have made schemes unviable.",
+      "The authors’ central proposal is to replace the present buffet of taxes, levies and most mandates (except corporation tax) with a single Floorspace Development Tax. It would be charged on additional gross floorspace, vary by use class and location, and be split between central and local government. Set at a sensible rate, they calculate it could cut the clearing price of a home by more than a third while raising cash receipts by more than 50%. Local authorities would still get money for infrastructure, social housing or remediation; they would simply get it in a form that does not kill the scheme.",
+      "They also argue for a rationalisation of requirements. Where the cost and the benefit are already internalised between the builder and the buyer — a balcony, dual-aspect, certain accessibility extras — the mandate should go. The buyer who values the feature can pay for it. The buyer who does not should not be forced to subsidise it. Planning should be simplified so that a scheme which fits the plan is not re-litigated for years. Rights to light, protected view corridors and the hunt for the perfect ‘Goldilocks’ development all come in for the same treatment: useful aims, applied in ways that freeze the most valuable land.",
+      "The paper is careful not to claim that every regulation is worthless. It is careful to say that the cumulative weight is now the binding constraint. Large developers are buying less land. Nearly 4,000 construction firms went bust last year. Small builders, who used to deliver a large share of new homes, are disappearing. The modelling is of break-even prices on two illustrative schemes, not of average sale prices across the country. The direction of travel is clear enough.",
+      "Full report: Edward Donovan and Ben Hopkinson, Easing the Burdens: How Government Policy Blocks Homes, Centre for Policy Studies, November 2026. Available at cps.org.uk. The numbers above are taken directly from that paper. Build On has summarised them; the analysis and the recommendations are the authors’."
+    ]
+  },
+  {
     slug: "democracy-without-the-veto",
     title: "Democracy without the neighbourhood veto",
     subtitle: "Britain is not short of elections. It is short of a room big enough for the people who need homes",
